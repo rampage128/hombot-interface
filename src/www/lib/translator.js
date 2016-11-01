@@ -19,27 +19,27 @@ define(['module', 'loader'], function (module, loader) {
         language = locale;
     }
        
-    function loadTranslation(path, translationKey, language, locale, callback) {
+    function loadTranslation(path, callback) {
         try {
             loader.load({
                 href: path, 
                 type: 'json',
                 async: false,
                 success: function(contents) {
-                    var newTranslations = contents[translationKey];
+                    var newTranslations = contents['default'];
                     var hasLanguage = false;
                     var hasLocale   = false;
                     for (var key in newTranslations) {
                         translations[key] = newTranslations[key];
                     }
-                    if (!!language && !!contents[language]) {
+                    if (!!contents[language]) {
                         newTranslations = contents[language];
                         for (var key in newTranslations) {
                             translations[key] = newTranslations[key];
                         }
                         hasLanguage = true;
                     }
-                    if (!!locale && !!contents[locale]) {
+                    if (!!contents[locale]) {
                         newTranslations = contents[locale];
                         for (var key in newTranslations) {
                             translations[key] = newTranslations[key];
@@ -75,30 +75,16 @@ define(['module', 'loader'], function (module, loader) {
             var basePath = null;
             var fileName = null;
             if (parts.length > 1) {
-                basePath = 'sites/' + parts[0] + '/lang/';
+                basePath = 'sites/' + parts[0] + '/';
                 fileName = parts[1] + '.js';
             } else {
                 basePath = 'lang/';
                 fileName = path + '.js';
             }
 
-            var counter = 0;
-            var next = function() {
-                if (!!callback && ++counter >= 3) {
+            loadTranslation(basePath + fileName, function(hasLanguage, hasLocale) {
+                if (!!callback) {
                     callback();
-                }
-            };
-            loadTranslation(basePath + fileName, 'default', language, locale, function(hasLanguage, hasLocale) {
-                next();
-                if (!hasLanguage) {
-                    loadTranslation(basePath + language + '/' + fileName, language, null, null, next);
-                } else {
-                    next();
-                }
-                if (!hasLocale) {
-                    loadTranslation(basePath + locale + '/' + fileName, locale, null, null, next);
-                } else {
-                    next();
                 }
             });
             cache[path] = true;

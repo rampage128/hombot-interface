@@ -65,12 +65,12 @@ module.exports = function (grunt) {
             www: {
                 files: {
                     "dist/www/lang/general.js": [ "src/www/lang/**/*.js" ],
-                    "dist/www/sites/mail/lang/strings.js": [ "src/www/sites/mail/lang/**/*.js" ],
-                    "dist/www/sites/maps/lang/strings.js": [ "src/www/sites/maps/lang/**/*.js" ],
-                    "dist/www/sites/overview/lang/strings.js": [ "src/www/sites/overview/lang/**/*.js" ],
-                    "dist/www/sites/schedule/lang/strings.js": [ "src/www/sites/schedule/lang/**/*.js" ],
-                    "dist/www/sites/service/lang/strings.js": [ "src/www/sites/service/lang/**/*.js" ],
-                    "dist/www/sites/statistics/lang/strings.js": [ "src/www/sites/statistics/lang/**/*.js" ]
+                    "dist/www/sites/mail/strings.js": [ "src/www/sites/mail/lang/**/*.js" ],
+                    "dist/www/sites/maps/strings.js": [ "src/www/sites/maps/lang/**/*.js" ],
+                    "dist/www/sites/overview/strings.js": [ "src/www/sites/overview/lang/**/*.js" ],
+                    "dist/www/sites/schedule/strings.js": [ "src/www/sites/schedule/lang/**/*.js" ],
+                    "dist/www/sites/service/strings.js": [ "src/www/sites/service/lang/**/*.js" ],
+                    "dist/www/sites/statistics/strings.js": [ "src/www/sites/statistics/lang/**/*.js" ]
                 }
             }
         }
