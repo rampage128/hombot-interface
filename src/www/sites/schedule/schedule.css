@@ -1,0 +1,64 @@
+.schedule__list {
+    list-style: none;
+    margin: 0;
+    padding: 16px 8px;
+}
+
+.schedule__list li {
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.schedule__label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120px;
+}
+
+.schedule__label label {
+    display: block;
+    background-color: white;
+    padding: 8px;
+    border-radius: 2px;
+    font-size: 0.8em;
+    cursor: pointer;
+    line-height: 1.25;
+    border: 1px solid lightgray;
+}
+
+.schedule__label input {
+    margin: 0 4px 0 0;
+    vertical-align: -1px;
+}
+
+.schedule__time {
+    margin-left: 128px;
+    margin-right: 110px;
+}
+
+.schedule__type {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 102px;
+}
+
+.schedule__time input,
+.schedule__type select {
+    width: 100%;
+}
+
+.schedule__list input[type=submit],
+.schedule__list input[type=reset] {
+    margin-top: 8px;
+}
+
+.schedule__list input[type=submit] {
+    width: 120px;    
+}
+
+.schedule__list input[type=reset] {
+    float: right;
+    width: 102px;
+}

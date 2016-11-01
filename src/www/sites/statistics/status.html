@@ -1,0 +1,50 @@
+{
+    "cleaning": {
+        "start_zz": {
+            "type": "int",
+            "value": ${CLREC:START_ZZ.count}
+        },
+        "finish_zz": {
+            "type": "int",
+            "value": ${CLREC:FINISH_ZZ.count}
+        },
+        "start_sb": {
+            "type": "int",
+            "value": ${CLREC:START_SB.count}
+        },
+        "finish_sb": {
+            "type": "int",
+            "value": ${CLREC:FINISH_SB.count}
+        },
+        "start_spot": {
+            "type": "int",
+            "value": ${CLREC:START_SPOT.count}
+        },
+        "finish_spot": {
+            "type": "int",
+            "value": ${CLREC:FINISH_SPOT.count}
+        },
+        "num_bumps": {
+            "type": "int",
+            "value": ${CLREC:CURRENTBUMPING.count}
+        },
+        "last_clean": {
+            "type": "datetime",
+            "value": "${CLREC:LAST_CLEAN.DateTime}"
+        },
+        "total_cleaning_time": {
+            "type": "duration",
+            "value": "${CLREC:TOTAL_CLEANTIME.DateTime}"
+        }
+    },
+    "system": {
+        "bootloader": {
+            "type": "string",
+            "value": "${CLREC:VER_BOOTLOADER.value}"
+        },
+        "revision": {
+            "type": "string",
+            "value": "${CLREC:VER_REVISION.value}"
+        }
+    }
+}

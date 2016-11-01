@@ -1,0 +1,27 @@
+{
+    "robot": {
+        "state": "${JSON:ROBOT_STATE}",
+        "battery": ${JSON:BATTPERC},
+        "turbo": ${JSON:TURBO},
+        "repeat": ${JSON:REPEAT},
+        "mode": "${JSON:MODE}",
+        "version": "${JSON:VERSION}",
+        "nickname": "${JSON:NICKNAME}",
+        "cleaning": {
+            "bumping": ${CLREC:CURRENTBUMPING.count},
+            "last_clean": "${CLREC:LAST_CLEAN.DateTime}"
+        },
+        "cpu": {
+            "idle": ${CPU:IDLE},
+            "user": ${CPU:USER},
+            "sys": ${CPU:SYS},
+            "nice": ${CPU:NICE}
+        }
+    },
+    "lgsrv": {
+        "version": "${LGSRV:VERSION}",
+        "command_count": ${LGSRV:SUMCMD},
+        "request_count": ${LGSRV:NUMHTTP},
+        "memory_usage": "${LGSRV:MEMUSAGE}"
+    }
+}

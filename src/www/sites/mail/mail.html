@@ -1,0 +1,53 @@
+<form action="/sites/mailcfg.html" method="GET" name="mail" id="mail_form">
+
+    <ol class="mail__list">
+        <li>
+            <fieldset>
+                <legend>
+                    <label>
+                        <input type="checkbox" name="P3ENABLE" id="P3ENABLE" value="yes"> {Reception}
+                    </label>
+                </legend>
+                <dl class="mail__fieldlist">
+                    <dt><label for="P3SIGN">{POP-3 Sign}</label></dt><!--
+                    --><dd><input type="text" name="P3SIGN" id="P3SIGN" maxlength="50" disabled></dd>
+                    <dt><label for="P3SERVER">{POP-3 Server}</label></dt><!--
+                    --><dd><input type="text" name="P3SERVER" id="P3SERVER" maxlength="50" disabled></dd>
+                    <dt><label for="P3CYCLE">{Polling Cycle}</label></dt><!--
+                    --><dd><input type="number" name="P3CYCLE" id="P3CYCLE" value="0" disabled></dd>
+                    <dt><label for="P3USER">{Username}</label></dt><!--
+                    --><dd><input type="text" name="P3USER" id="P3USER" maxlength="50" disabled></dd>
+                    <dt><label for="P3PASS">{Password}</label></dt><!--
+                    --><dd><input type="password" name="P3PASS" id="P3PASS" disabled></dd>
+                    <dt></dt><!--
+                    --><dd><input type="submit" name="ACTION" value="{Receive}" id="mail_receive" disabled></dd>
+                </dl>
+            </fieldset>
+        </li><!--
+        --><li>
+            <fieldset>
+                <legend>
+                    <label>
+                        <input type="checkbox" name="SLENABLE" id="SLENABLE" value="yes"> {Dispatch}
+                    </label>
+                </legend>
+                <dl class="mail__fieldlist">
+                    <dt><label for="RECEIVER">{Recipient}</label></dt><!--
+                    --><dd><input type="text" name="RECEIVER" id="RECEIVER" maxlength="50" disabled></dd>
+                    <dt><label for="GATEWAY">{SMTP Server}</label></dt><!--
+                    --><dd><input type="text" name="GATEWAY" id="GATEWAY" maxlength="50" disabled></dd>
+                    <dt><label for="USER">{Username}</label></dt><!--
+                    --><dd><input type="text" name="USER" id="USER" maxlength="50" disabled></dd>
+                    <dt><label for="PASS">{Password}</label></dt><!--
+                    --><dd><input type="password" name="PASS" id="PASS" disabled></dd>
+                    <dt></dt><!--
+                    --><dd><input type="submit" name="ACTION" value="{Test}" id="mail_dispatch" disabled></dd>
+                </dl>
+            </fieldset>
+        </li>
+        <li class="mail__controls">
+            <input type="submit" name="ACTION" value="{Save}" id="mail_submit">
+            <input type="reset" value="{Reset}" id="mail_reset">
+        </li>
+    </ol>
+</form>

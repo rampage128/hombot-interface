@@ -1,0 +1,16 @@
+<li>
+    <div class="schedule__label">
+        <label>
+            <input type="checkbox" name="check_{index}" {checked}> {day}
+        </label>
+    </div>
+    <div class="schedule__time">
+        <input type="time" name="time_{index}" {disabled} value="{time}">
+    </div>
+    <div class="schedule__type">
+        <select name="type_{index}" {disabled}>
+            <option value="ZZ" {selected_zz}>{ZZ}</option>
+            <option value="SB" {selected_sb}>{SB}</option>
+        </select>
+    </div>
+</li>

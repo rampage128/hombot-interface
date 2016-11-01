@@ -1,0 +1,55 @@
+<ul class="layout__container">
+    <li class="layout__item full">
+        <section class="service__wrapper">
+            <h2 class="service__title">{Software_version}</h2>
+            <div class="service__content">
+                <div class="software__version">
+                    ${LGSRV:VERSION}
+                </div>
+                <form id="fileupload" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                    <dl class="form__wrapper software__form">
+                        <dt class="form__label"><label for="software_update">{Update}</label></dt>
+                        <dd class="form__field direct">
+                            <div class="form__input"><input type="file" name="myfile" id="software_update" /></div>
+                            <div class="form__submit"><input type="submit" name="submit" value="{Upload}" /></div>
+                        </dd>
+                    </dl>
+                </form>
+            </div>
+        </section>
+    </li>
+    <li class="layout__item">
+        <section class="service__wrapper">
+            <h2 class="service__title">{Configuration}</h2>
+            <div class="service__content">
+            </div>
+        </section>
+    </li><!--
+    --><li class="layout__item">
+        <section class="service__wrapper">
+            <h2 class="service__title">{Downloads}</h2>
+            <div class="service__content">
+            </div>
+        </section>
+    </li>
+    <li class="layout__item full">
+        <section class="service__wrapper">
+            <h2 class="service__title">{Properties}</h2>
+            <div class="service__content">
+                <dl class="form__wrapper properties__form">
+                    <dt class="form__label"><label for="property_time_field">{Datetime}</label></dt>
+                    <dd class="form__field direct">
+                        <div class="form__input"><input type="datetime-local" id="property_time_field" /></div>
+                        <div class="form__submit"><input type="submit" value="{Set}" /></div>
+                    </dd>
+                    <dt class="form__label"><label for="property_nickname_field">{Nickname}</label></dt>
+                    <dd class="form__field direct">
+                        <div class="form__input"><input type="text" id="property_nickname_field" maxlength="16" /></div>
+                        <div class="form__submit"><input type="submit" id="property" value="{Set}" /></div>
+                    </dd>
+                </dl>
+            </div>
+        </section>
+    </li>
+</ul>
+

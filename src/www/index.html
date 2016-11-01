@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+Wrapping html file
+-->
+<html>
+    <head>
+        <title>Hombot</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script data-main="app" src="lib/require.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
+                <symbol id="icon-menu" viewBox="0 0 24 24">
+                    <title>menu</title>
+                    <path fill="white" class="path1" d="M3 6h18v2.016h-18v-2.016zM3 12.984v-1.969h18v1.969h-18zM3 18v-2.016h18v2.016h-18z"></path>
+                </symbol>
+                <symbol id="spinner" viewBox="0 0 24 24">
+                    <title>spinner</title>
+                    <path fill="#333" class="path1" d="M12 3c5.531 0 9.984 4.453 9.984 9.984 0 3.703-1.969 6.938-4.969 8.672l-1.031-1.734c2.391-1.406 4.031-3.984 4.031-6.938 0-4.406-3.609-7.969-8.016-7.969s-8.016 3.563-8.016 7.969c0 2.953 1.594 5.531 3.984 6.938l-0.984 1.734c-3-1.734-4.969-4.969-4.969-8.672 0-5.531 4.453-9.984 9.984-9.984z">
+                        <animateTransform
+                            attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 12 13"
+                            to="360 12 13"
+                            dur="1.5s"
+                            repeatCount="indefinite"
+                            />
+                    </path>
+                    <path fill="#333" class="path2" d="M18 12.984c0 2.203-1.219 4.172-3 5.203l-0.984-1.734c1.172-0.703 1.969-1.969 1.969-3.469 0-2.203-1.781-3.984-3.984-3.984s-3.984 1.781-3.984 3.984c0 1.5 0.797 2.766 1.969 3.469l-0.984 1.734c-1.781-1.031-3-3-3-5.203 0-3.328 2.672-6 6-6s6 2.672 6 6z">
+                        <animateTransform
+                            attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 12 13"
+                            to="-360 12 13"
+                            dur="1s"
+                            repeatCount="indefinite"
+                            />
+                    </path>
+                    <path fill="#333" class="path3" d="M12 11.016c1.078 0 2.016 0.891 2.016 1.969s-0.938 2.016-2.016 2.016-2.016-0.938-2.016-2.016 0.938-1.969 2.016-1.969z">
+                        <animate attributeName="opacity"
+                            values="0;1;0" dur="2s"
+                            repeatCount="indefinite"/>
+                    </path>
+                </symbol>
+            </defs>
+        </svg>
+        
+        <div class="layout__wrapper">
+            <header>
+                <h1><svg viewBox="0 0 100 100" class="main-navigation__toggle">
+                        <use xlink:href="#icon-menu"></use>
+                    </svg> ${JSON:NICKNAME} interface</h1>
+            </header>
+            <nav class="main-navigation">
+                <ul>
+                    <li class="active"><a href="#overview">Overview</a></li>
+                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="#maps">Maps</a></li>
+                    <li><a href="#statistics">Statistics</a></li>
+                    <li><a href="#service">Service</a></li>
+                    <li><a href="#mail">Mail</a></li>
+                </ul>
+            </nav>
+            <div class="main-navigation__shadow"></div>
+            <main id="content">
+
+            </main>
+        </div>
+    </body>
+</html>

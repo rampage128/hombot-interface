@@ -1,0 +1,51 @@
+.status__display ul {
+    margin: 0;
+    padding: 4px;
+}
+
+.status__display li {
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+}
+
+@media (min-width: 480px) {
+    .status__display li {
+        width: 25%;
+    }
+}
+
+.status__display li.large {
+    width: 50%;
+}
+
+.status__wrapper {
+    background-color: white;
+    border-radius: 2px;
+    margin: 4px;
+    padding: 8px;
+}
+
+.status__icon {
+    font-size: 0.75em;
+    margin: 0;
+    text-align: center;
+}
+
+.status__icon > svg {
+    margin: 32px;
+}
+
+
+.progressbar__container {
+    background-color: lightgray;
+    border-radius: 2px;
+    height: 16px;
+}
+
+.progressbar__progress {
+    background-color: #c40452;
+    border-radius: 2px;
+    height: 16px;
+    transition: width 1s ease;
+}
