@@ -13,6 +13,21 @@ module.exports = function (grunt) {
                 src: ['dist/*.*']   
             }
         },
+        uglify: {
+            options: {
+                mangle: {
+                    except: ['require']
+                }
+            },
+            www: {
+                files: [{
+                    expand: true,
+                    cwd: 'dist/www/',
+                    src: '**/*.js',
+                    dest: 'dist/www/'
+                }]
+              }
+        },
         concat: {
             www: {
                 files: [
@@ -67,5 +82,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-merge-json');
     
-    grunt.registerTask('build', ['copy', 'concat', 'merge-json']);
+    grunt.registerTask('build', ['copy', 'concat', 'uglify', 'merge-json']);
 };
