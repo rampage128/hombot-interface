@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "de": {
         "Software_version": "Software Version",
         "Update": "Update",
         "Upload": "Hochladen",

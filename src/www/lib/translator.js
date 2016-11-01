@@ -18,25 +18,42 @@ define(['module', 'loader'], function (module, loader) {
     } else {
         language = locale;
     }
-    
-    function loadTranslation(path, callback) {
+       
+    function loadTranslation(path, translationKey, language, locale, callback) {
         try {
             loader.load({
                 href: path, 
                 type: 'json',
                 async: false,
                 success: function(contents) {
-                    var newTranslations = contents.strings;
+                    var newTranslations = contents[translationKey];
+                    var hasLanguage = false;
+                    var hasLocale   = false;
                     for (var key in newTranslations) {
                         translations[key] = newTranslations[key];
+                    }
+                    if (!!language && !!contents[language]) {
+                        newTranslations = contents[language];
+                        for (var key in newTranslations) {
+                            translations[key] = newTranslations[key];
+                        }
+                        hasLanguage = true;
+                    }
+                    if (!!locale && !!contents[locale]) {
+                        newTranslations = contents[locale];
+                        for (var key in newTranslations) {
+                            translations[key] = newTranslations[key];
+                        }
+                        hasLocale = true;
+                    }
+                    if (!!callback) {
+                        callback(hasLanguage, hasLocale);
                     }
                 },
                 error: function(code) {
                     console.log('Warning: cannot load translations ' + path + ': ' + code);
-                },
-                always: function(code) {
                     if (!!callback) {
-                        callback();
+                        callback(false, false);
                     }
                 }
             });
@@ -71,9 +88,19 @@ define(['module', 'loader'], function (module, loader) {
                     callback();
                 }
             };
-            loadTranslation(basePath + fileName, next);
-            loadTranslation(basePath + language + '/' + fileName, next);
-            loadTranslation(basePath + locale + '/' + fileName, next);
+            loadTranslation(basePath + fileName, 'default', language, locale, function(hasLanguage, hasLocale) {
+                next();
+                if (!hasLanguage) {
+                    loadTranslation(basePath + language + '/' + fileName, language, null, null, next);
+                } else {
+                    next();
+                }
+                if (!hasLocale) {
+                    loadTranslation(basePath + locale + '/' + fileName, locale, null, null, next);
+                } else {
+                    next();
+                }
+            });
             cache[path] = true;
         },
         get: function(key, params) {

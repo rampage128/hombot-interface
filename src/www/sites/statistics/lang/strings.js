@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "default": {
         "start_zz": "Started runs (Zig zag)",
         "start_sb": "Started runs (Cell by cell)",
         "start_spot": "Started runs (Spot)",

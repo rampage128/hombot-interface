@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "de": {
         "start_zz": "Zick-zack gestartet",
         "start_sb": "Cell-by-cell gestartet",
         "start_spot": "Spiral gestartet",

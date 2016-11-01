@@ -29,9 +29,9 @@ module.exports = function (grunt) {
         copy: {
             www: {
                 files: [
-                    {expand: true, cwd: 'src/www/', src: ['css/**', 'lang/**', 'lib/**', '*'], dest: 'dist/www/'},
-                    {expand: true, cwd: 'src/www/sites/', src: ['mail/**', 'overview/**', 'schedule/**', 'service/**', 'statistics/**', '*'], dest: 'dist/www/sites/'},
-                    {expand: true, cwd: 'src/www/sites/maps/', src: ['*.html', '*.css', 'lang/**'], dest: 'dist/www/sites/maps/'}
+                    {expand: true, cwd: 'src/www/', src: ['css/**', 'lib/**', '*'], dest: 'dist/www/'},
+                    {expand: true, cwd: 'src/www/sites/', src: ['mail/**', 'overview/**', 'schedule/**', 'service/**', 'statistics/**', '*', '!**/lang/**'], dest: 'dist/www/sites/'},
+                    {expand: true, cwd: 'src/www/sites/maps/', src: ['*.html', '*.css'], dest: 'dist/www/sites/maps/'}
                 ]
             },
             viewer: {
@@ -45,6 +45,19 @@ module.exports = function (grunt) {
                     {expand: true, cwd: 'src/installer/', src: ['*'], dest: 'dist/'}
                 ]
             }
+        },
+        "merge-json": {
+            www: {
+                files: {
+                    "dist/www/lang/general.js": [ "src/www/lang/**/*.js" ],
+                    "dist/www/sites/mail/lang/strings.js": [ "src/www/sites/mail/lang/**/*.js" ],
+                    "dist/www/sites/maps/lang/strings.js": [ "src/www/sites/maps/lang/**/*.js" ],
+                    "dist/www/sites/overview/lang/strings.js": [ "src/www/sites/overview/lang/**/*.js" ],
+                    "dist/www/sites/schedule/lang/strings.js": [ "src/www/sites/schedule/lang/**/*.js" ],
+                    "dist/www/sites/service/lang/strings.js": [ "src/www/sites/service/lang/**/*.js" ],
+                    "dist/www/sites/statistics/lang/strings.js": [ "src/www/sites/statistics/lang/**/*.js" ]
+                }
+            }
         }
     });
     
@@ -52,6 +65,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-merge-json');
     
-    grunt.registerTask('build', ['copy', 'concat']);
+    grunt.registerTask('build', ['copy', 'concat', 'merge-json']);
 };

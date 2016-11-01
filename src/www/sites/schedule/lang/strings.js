@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "default": {
         "monday": "Monday",
         "tuesday": "Tuesday",
         "wednesday": "Wednesday",

@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "de": {
         "Battery": "Batterie",
         "CPU Load": "Prozessorlast",
         "turbo_status": "Turbo {0}",

@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "de": {
         "ZZ": "Zick zack",
         "SB": "Cell-by-cell",
         "Save": "Speichern",

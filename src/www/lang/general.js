@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "default": {
         "ZZ": "Zig zag",
         "SB": "Cell by cell",
         "Save": "Save",

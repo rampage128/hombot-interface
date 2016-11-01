@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "default": {
         "Software_version": "Software version",
         "Update": "Update",
         "Upload": "Upload",

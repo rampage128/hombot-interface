@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "default": {
         "Username": "Username",
         "Password": "Password",
         "Reception": "Reception",

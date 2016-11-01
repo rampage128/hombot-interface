@@ -1,5 +1,5 @@
 {
-    "strings": {
+    "de": {
         "Username": "Benutzername",
         "Password": "Passwort",
         "Reception": "Empfang",
