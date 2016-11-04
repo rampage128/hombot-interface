@@ -14,7 +14,7 @@ rm -rf $SOURCE_PATH/backup/*
 mv /usr/data/htdocs/* $SOURCE_PATH/backup/
 
 # install
-cp -r $SOURCE_PATH/www /usr/data/htdocs
+cp -rf $SOURCE_PATH/www/* /usr/data/htdocs
 
 # restore files
 test -f $SOURCE_PATH/backup/mail.cfg || cp $SOURCE_PATH/backup/mail.cfg /usr/data/htdocs/
