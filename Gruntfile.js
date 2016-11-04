@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function (grunt) {   
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -73,6 +73,23 @@ module.exports = function (grunt) {
                     "dist/www/sites/statistics/strings.js": [ "src/www/sites/statistics/lang/**/*.js" ]
                 }
             }
+        },
+        createMenu: {
+            www: {
+                options: {
+                    order: [
+                        'overview',
+                        'schedule',
+                        'maps',
+                        'statistics',
+                        'service',
+                        'mail'
+                    ]
+                },
+                files: {
+                    "dist/www/app.js": [ "src/www/sites/*.js" ]
+                }
+            }
         }
     });
     
@@ -81,6 +98,42 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-merge-json');
+    grunt.loadNpmTasks('grunt-include-source');
     
-    grunt.registerTask('build', ['copy', 'concat', 'uglify', 'merge-json']);
+    grunt.registerMultiTask('createMenu', function() {
+        var options = (this.options && this.options()) || {};
+        var orderedModules = options.order.slice();
+                
+        this.files.forEach(function(file) {            
+            var modules = file.src.map(function(source) {
+                var parts = source.split("/");
+                var fileName = parts[parts.length - 1];
+                var id = fileName.replace(/\.[^\.]*$/, '');
+                return {
+                    id: id,
+                    fileName: fileName,
+                    name: id.charAt(0).toUpperCase() + id.slice(1)
+                };
+            });
+            
+            modules.forEach(function(module) {
+                var found = false;
+                orderedModules.forEach(function(moduleId, index) {
+                    if (moduleId === module.id) {
+                        orderedModules[index] = module;
+                        found = true;
+                    }
+                });
+                if (!found) {
+                    orderedModules.push(module);
+                }
+            });           
+            
+            var contents = grunt.file.read(file.dest);
+            grunt.file.write(file.dest, contents.replace(/\['moduleDefinition'\]/g, JSON.stringify(orderedModules)));
+            grunt.log.writeln('Modified "' + file.dest + '".');
+        });
+    });
+    
+    grunt.registerTask('build', ['copy', 'concat', 'createMenu', 'uglify', 'merge-json']);
 };

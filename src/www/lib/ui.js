@@ -1,7 +1,8 @@
-define(['text!toaster.html', 'text!toast.html', 'text!spinner.html'], function (toasterTemplate, toastTemplate, spinnerTemplate) {
+define(['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.html', "text!menu_item.html", "loader"], function (module, toasterTemplate, toastTemplate, spinnerTemplate, menuItemTemplate, loader) {
     var menuElement;
     var toaster;
     var spinner;
+    var masterConfig = (module.config && module.config()) || {};
     
     function getMenuElement() {
         if (!menuElement) {
@@ -63,6 +64,15 @@ define(['text!toaster.html', 'text!toast.html', 'text!spinner.html'], function (
     }
        
     return {
+        createMenu: function() {
+            var menuElement = getMenuElement().querySelector('ul');
+            var menuItems = '';
+            masterConfig.modules.forEach(function(module) {
+                var menuItem = menuItemTemplate.replace(/{id}/g, module.id).replace(/{name}/g, module.name);
+                menuItems += menuItem;
+            });
+            menuElement.innerHTML = menuItems;
+        },
         showMenu: function() {
             var menuElement = getMenuElement();
             if (menuElement.className.indexOf('active') < 0) {

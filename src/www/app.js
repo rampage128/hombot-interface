@@ -1,5 +1,3 @@
-var locale = localStorage.getItem('locale') || 'dummy';
-
 require.config({
     enforceDefine: true,
     baseUrl: 'lib',
@@ -9,8 +7,8 @@ require.config({
         nls: '../nls'
     },
     config: {
-        i18n: {
-            locale: locale
+        ui: {
+            modules: ['moduleDefinition']
         }
     }
 });
@@ -65,6 +63,8 @@ define(function(require) {
             });
         });
     }
+       
+    ui.createMenu();
        
     if(!!window.location.hash) {
         navigate();
