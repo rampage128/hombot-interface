@@ -24,3 +24,9 @@
 .properties__form {
     margin-top: 16px;
 }
+
+.download__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
