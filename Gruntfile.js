@@ -135,5 +135,6 @@ module.exports = function (grunt) {
         });
     });
     
-    grunt.registerTask('build', ['copy', 'concat', 'createMenu', 'uglify', 'merge-json']);
+    grunt.registerTask('build-dev', ['copy', 'concat', 'createMenu', 'merge-json']);
+    grunt.registerTask('build', ['clean', 'copy', 'concat', 'createMenu', 'uglify', 'merge-json']);
 };
