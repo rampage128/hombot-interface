@@ -47,22 +47,22 @@ define("sites/overview/joystick", [], function() {
                     var pos = {
                         x: event.pageX - event.currentTarget.offsetLeft,
                         y: event.pageY - event.currentTarget.offsetTop
-                    }
+                    };
                     
                     var size = {
                         x: container.offsetWidth,
                         y: container.offsetHeight
-                    }
+                    };
                     
                     var center = {
                         x: size.x / 2,
                         y: size.y / 2
-                    }
+                    };
                     
                     var vector = {
                         x: pos.x - center.x,
                         y: pos.y - center.y
-                    }
+                    };
                                        
                     var length = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
 
