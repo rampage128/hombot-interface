@@ -78,7 +78,7 @@ input[disabled], select[disabled], textarea[disabled] {
 
 .layout__container {
     list-style: none;
-    margin: 0;
+    margin: 16px 0 0;
     padding: 0;
 }
 
