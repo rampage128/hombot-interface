@@ -1,13 +1,25 @@
-define('ui', ['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.html', "text!menu_item.html", "translator"], function (module, toasterTemplate, toastTemplate, spinnerTemplate, menuItemTemplate, t) {
+define('ui', ['module', 'text!ui_templates.html', 'translator'], function (module, masterTemplate, t) {
     var menuElement;
     var toaster;
     var spinner;
     var activeSite = null;
     var main = document.querySelector('#content');
-    
+    var templates = {};
     var masterConfig = (module.config && module.config()) || {};
     
-    t.load('general');
+    t.load('general');  
+    
+    function getTemplate(name) {
+        if (!templates[name]) {
+            var tmp = document.createElement('DIV');
+            tmp.innerHTML = masterTemplate;
+            var templateWrapper = tmp.querySelector('#template_' + name);
+            if (!!templateWrapper) {
+                templates[name] = templateWrapper.innerHTML;
+            }
+        }
+        return templates[name];
+    }
     
     function getMenuElement() {
         if (!menuElement) {
@@ -58,7 +70,7 @@ define('ui', ['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.ht
             toaster = document.querySelector('#toaster');
             if (!toaster) {
                 var temp = document.createElement('div');
-                temp.innerHTML = toasterTemplate;
+                temp.innerHTML = getTemplate('toaster');
                 toaster = temp.children[0];
                 document.body.appendChild(toaster);
             }
@@ -71,7 +83,7 @@ define('ui', ['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.ht
             console.error(message);
         }
         var temp = document.createElement('div');
-        temp.innerHTML = toastTemplate
+        temp.innerHTML = getTemplate('toast')
             .replace(/{message}/g, message)
             .replace(/{type}/g, type);
         return temp.children[0];
@@ -80,7 +92,7 @@ define('ui', ['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.ht
     function createSpinner() {
         if (!spinner) {
             var container = document.createElement('DIV');
-            container.innerHTML = spinnerTemplate;
+            container.innerHTML = getTemplate('spinner');
             spinner = container.children[0];
         }
         return spinner;
@@ -91,7 +103,7 @@ define('ui', ['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.ht
             var menuElement = getMenuElement().querySelector('ul');
             var menuItems = '';
             masterConfig.modules.forEach(function(module) {
-                var menuItem = menuItemTemplate.replace(/{id}/g, module.id).replace(/{name}/g, module.name);
+                var menuItem = getTemplate('menuitem').replace(/{id}/g, module.id).replace(/{name}/g, module.name);
                 menuItems += menuItem;
             });
             menuElement.innerHTML = menuItems;

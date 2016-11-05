@@ -1,0 +1,22 @@
+<template id="template_menuitem">
+    <li><a href="#{id}">{name}</a></li>
+</template>
+
+<template id="template_spinner">
+    <div class="spinner">
+        <svg viewBox="0 0 100 100">
+            <use xlink:href="#spinner"></use>
+        </svg>
+    </div>
+</template>
+
+<template id="template_toaster">
+    <div id="toaster" class="toast__toaster"></div>
+</template>
+
+<template id="template_toast">
+    <div class="toast__container toast__container--{type}">
+        <div class="toast__message">{message}</div>
+        <div class="toast__close"></div>
+    </div>
+</template>
