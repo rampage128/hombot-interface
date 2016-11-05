@@ -2,6 +2,7 @@
     "default": {
         "ZZ": "Zig zag",
         "SB": "Cell by cell",
+        "SPOT": "Spot",
         "Save": "Save",
         "Reset": "Reset",
         "on": "on",

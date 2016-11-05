@@ -2,6 +2,7 @@
     "de": {
         "ZZ": "Zick zack",
         "SB": "Cell-by-cell",
+        "SPOT": "Spiralmodus",
         "Save": "Speichern",
         "Reset": "Zurücksetzen",
         "on": "an",
