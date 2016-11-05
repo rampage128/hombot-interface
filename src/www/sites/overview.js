@@ -56,15 +56,19 @@ define(function(require) {
                 elements.turbo.icon.setAttribute('xlink:href', '#icon-turbo_' + status.robot.turbo);
                 elements.battery.progress.style.width = status.robot.battery + '%';
                 elements.cpu.progress.style.width = (100 - status.robot.cpu.idle) + '%';
-                elements.controls.startstop.icon.setAttribute('xlink:href', status.robot.state !== 'WORKING' ? '#icon-state_working' : '#icon-state_pause');
+                elements.controls.startstop.icon.setAttribute('xlink:href', status.robot.state !== 'WORKING' ? '#icon-action_start' : '#icon-state_pause');
                 elements.controls.startstop.label.innerHTML = t.get(status.robot.state !== 'WORKING' ? 'Start' : 'Pause');
                 elements.controls.homeundock.icon.setAttribute('xlink:href', status.robot.state !== 'CHARGING' ? '#icon-state_homing' : '#icon-state_backmoving_init');
                 elements.controls.homeundock.label.innerHTML = t.get(status.robot.state !== 'CHARGING' ? 'Home' : 'Undock');
                 
                 if (status.robot.state !== 'STANDBY') {
                     joystick.stopListening();
+                    if (elements.joystick.container.className.indexOf('joystick__move--disabled') === -1) {
+                        elements.joystick.container.className += ' joystick__move--disabled';
+                    }
                 } else {
                     joystick.startListening();
+                    elements.joystick.container.className = elements.joystick.container.className.replace(/ joystick__move--disabled/,'');
                 }
             },
             error: function(code) {
@@ -74,7 +78,11 @@ define(function(require) {
                 elements.mode.label.innerHTML = '-';
                 elements.turbo.label.innerHTML = '-';
                 elements.battery.progress.style.width = '0%';
-                elements.cpu.progress.style.width = '0%';
+                elements.cpu.progress.style.width = '0%';                
+                joystick.stopListening();
+                if (elements.joystick.container.className.indexOf('joystick__move--disabled') === -1) {
+                    elements.joystick.container.className += ' joystick__move--disabled';
+                }
                 ui.toast(t.get('overview_error', [code.message]), 'error');
             },
             always: callback
@@ -103,7 +111,7 @@ define(function(require) {
                 context.putImageData(outputImage,0,0);
             },
             error: function(code) {
-                console.log('bla ' + code);
+                context.clearRect(0, 0, elements.camera.canvas.width, elements.camera.canvas.height);
             }
         });
     };
@@ -200,7 +208,6 @@ define(function(require) {
                     send('{\"JOY\":\"RIGHT\"}');
                 }
             });
-            joystick.startListening();
             
             update();
         },

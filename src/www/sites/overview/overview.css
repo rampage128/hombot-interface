@@ -34,6 +34,10 @@
     padding-bottom: 20%;
 }
 
+.status__icon--clickable {
+    cursor: pointer;
+}
+
 .status__icon > svg {
     position: absolute;
     left: 0;
@@ -54,6 +58,8 @@
 
 .camera__wrapper canvas {
     width: 100%;
+    border-radius: 2px;
+    background-color: lightgray;
 }
 
 .joystick__wrapper {
@@ -63,6 +69,14 @@
 }
 
 .joystick__move {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#666666+20,f5f5f5+100 */
+    background: rgb(102,102,102); /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  rgba(102,102,102,1) 20%, rgba(245,245,245,1) 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover,  rgba(102,102,102,1) 20%,rgba(245,245,245,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center,  rgba(102,102,102,1) 20%,rgba(245,245,245,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666666', endColorstr='#f5f5f5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    
+    box-shadow: inset 0px 0px 16px 0px rgba(0,0,0,0.75);
     position: absolute;
     top: 0;
     left: 0;
@@ -73,11 +87,16 @@
     border-radius: 50%;
 }
 
+.joystick__move--disabled {
+    opacity: .5;
+}
+
 .joystick__stick {
     position: absolute;
     background-color: white;
     border: 1px solid gray;
     border-radius: 50%;
+    box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.75);
     width: 30%;
     height: 30%;
     top: 50%;
@@ -119,4 +138,5 @@
     border-radius: 2px;
     padding: 8px;
     margin: 0 4px;
+    cursor: pointer;
 }

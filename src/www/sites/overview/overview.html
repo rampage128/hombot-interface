@@ -8,9 +8,23 @@
             <title>repeat_false</title>
             <path fill="#333" fill-opacity=".25" class="path1" d="M18.609 6.609c3 0 5.391 2.438 5.391 5.391s-2.391 5.391-5.391 5.391c-1.453 0-2.813-0.563-3.844-1.594l-1.266-1.125 1.5-1.313 1.172 0.984c0.703 0.703 1.547 1.031 2.438 1.031 1.875 0 3.375-1.5 3.375-3.375s-1.5-3.375-3.375-3.375c-0.891 0-1.734 0.328-2.391 0.984-1.412 1.244-2.835 2.478-4.219 3.75l-2.813 2.484c-0.984 0.984-2.344 1.547-3.797 1.547-3 0-5.391-2.438-5.391-5.391s2.391-5.391 5.391-5.391c1.453 0 2.813 0.563 3.844 1.594l1.266 1.125-1.547 1.313-1.125-0.984c-0.703-0.703-1.547-1.031-2.438-1.031-1.875 0-3.375 1.5-3.375 3.375s1.5 3.375 3.375 3.375c0.891 0 1.734-0.328 2.391-0.984 1.412-1.244 2.835-2.478 4.219-3.75l2.813-2.484c0.984-0.984 2.344-1.547 3.797-1.547z"></path>
         </symbol>
+        <symbol id="icon-action_start" viewBox="0 0 24 24">
+            <title>action_start</title>
+            <path fill="#333" d="M8.016 5.016l10.969 6.984-10.969 6.984v-13.969z"></path>
+        </symbol>
         <symbol id="icon-state_working" viewBox="0 0 24 24">
             <title>state_working</title>
-            <path fill="#333" class="path1" d="M18.75 7.734c0.797 1.219 1.266 2.719 1.266 4.266 0 4.406-3.609 8.016-8.016 8.016v3l-3.984-4.031 3.984-3.984v3c3.328 0 6-2.672 6-6 0-1.031-0.281-1.969-0.703-2.813zM12 6c-3.328 0-6 2.672-6 6 0 1.031 0.234 1.969 0.703 2.813l-1.453 1.453c-0.797-1.219-1.266-2.719-1.266-4.266 0-4.406 3.609-8.016 8.016-8.016v-3l3.984 4.031-3.984 3.984v-3z"></path>
+            <path fill="#333" class="path1" d="M18.75 7.734c0.797 1.219 1.266 2.719 1.266 4.266 0 4.406-3.609 8.016-8.016 8.016v3l-3.984-4.031 3.984-3.984v3c3.328 0 6-2.672 6-6 0-1.031-0.281-1.969-0.703-2.813zM12 6c-3.328 0-6 2.672-6 6 0 1.031 0.234 1.969 0.703 2.813l-1.453 1.453c-0.797-1.219-1.266-2.719-1.266-4.266 0-4.406 3.609-8.016 8.016-8.016v-3l3.984 4.031-3.984 3.984v-3z">
+                <animateTransform
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 12 12"
+                    to="360 12 12"
+                    dur="2s"
+                    repeatCount="indefinite"
+                    />
+            </path>
         </symbol>
         <symbol id="icon-state_charging" viewBox="0 0 24 24">
             <title>state_charging</title>
@@ -44,8 +58,8 @@
             <title>state_standby</title>
             <path fill="#333" class="path1" d="M17.813 5.156c1.922 1.641 3.188 4.125 3.188 6.844 0 4.969-4.031 9-9 9s-9-4.031-9-9c0-2.719 1.266-5.203 3.188-6.844l1.406 1.406c-1.547 1.266-2.578 3.234-2.578 5.438 0 3.891 3.094 6.984 6.984 6.984s6.984-3.094 6.984-6.984c0-2.203-0.984-4.125-2.578-5.391zM12.984 3v9.984h-1.969v-9.984h1.969z"></path>
         </symbol>
-        <symbol id="icon-mode_spiral" viewBox="0 0 24 24">
-            <title>mode_spiral</title>
+        <symbol id="icon-mode_spot" viewBox="0 0 24 24">
+            <title>mode_spot</title>
             <path fill="#333" class="path1" d="M17.672 6.328l2.344-2.344v7.031h-7.031l3.234-3.234c-1.078-1.078-2.578-1.781-4.219-1.781-3.328 0-6 2.672-6 6s2.672 6 6 6c2.625 0 4.875-1.641 5.672-3.984h2.063c-0.891 3.469-3.984 6-7.734 6-4.406 0-7.969-3.609-7.969-8.016s3.563-8.016 7.969-8.016c2.203 0 4.219 0.891 5.672 2.344z"></path>
         </symbol>
         <symbol id="icon-mode_sb" viewBox="0 0 24 24">
@@ -64,7 +78,7 @@
     <ul>
         <li>
             <div class="status__wrapper">
-                <figure class="status__icon ${JSON:ROBOT_STATE}" id="status_state">
+                <figure class="status__icon" id="status_state">
                     <svg viewBox="0 0 100 100">
                         <use xlink:href="#icon-state_charging"></use>
                     </svg>
@@ -74,7 +88,7 @@
         </li><!--
         --><li>
             <div class="status__wrapper">
-                <figure class="status__icon ${JSON:REPEAT}" id="status_repeat">
+                <figure class="status__icon status__icon--clickable" id="status_repeat">
                     <svg viewBox="0 0 100 100">
                         <use xlink:href="#icon-repeat_on"></use>
                     </svg>
@@ -84,7 +98,7 @@
         </li><!--
         --><li>
             <div class="status__wrapper">
-                <figure class="status__icon ${JSON:MODE}" id="status_mode">
+                <figure class="status__icon status__icon--clickable" id="status_mode">
                     <svg viewBox="0 0 100 100">
                         <use xlink:href="#icon-mode_zz"></use>
                     </svg>
@@ -94,7 +108,7 @@
         </li><!--
         --><li>
             <div class="status__wrapper">
-                <figure class="status__icon ${JSON:TURBO}" id="status_turbo">
+                <figure class="status__icon status__icon--clickable" id="status_turbo">
                     <svg viewBox="0 0 100 100">
                         <use xlink:href="#icon-turbo_on"></use>
                     </svg>
@@ -126,9 +140,9 @@
                 <ul class="controls__list">
                     <li class="controls__item">
                         <div class="status__wrapper controls__button" id="control_startstop">
-                            <figure class="status__icon ${JSON:REPEAT}" id="status_repeat">
+                            <figure class="status__icon" id="status_repeat">
                                 <svg viewBox="0 0 100 100">
-                                    <use xlink:href="#icon-state_working"></use>
+                                    <use xlink:href="#icon-action_start"></use>
                                 </svg>
                                 <figcaption>-</figcaption>
                             </figure>
@@ -136,7 +150,7 @@
                     </li><!--
                     --><li class="controls__item">
                         <div class="status__wrapper controls__button" id="control_homeundock">
-                            <figure class="status__icon ${JSON:REPEAT}" id="status_repeat">
+                            <figure class="status__icon" id="status_repeat">
                                 <svg viewBox="0 0 100 100">
                                     <use xlink:href="#icon-state_undocking"></use>
                                 </svg>
@@ -150,8 +164,8 @@
         </li><!--
         --><li class="large">
             <div class="status__wrapper">
-                <div class="joystick__wrapper" id="joystick_container">
-                    <div class="joystick__move">
+                <div class="joystick__wrapper">
+                    <div class="joystick__move joystick__move--disabled" id="joystick_container">
                         <div class="joystick__stick" id="joystick_stick"></div>
                     </div>
                 </div>
