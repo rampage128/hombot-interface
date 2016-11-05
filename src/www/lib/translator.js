@@ -1,4 +1,4 @@
-define(['module', 'loader'], function (module, loader) {
+define('translator', ['module', 'loader'], function (module, loader) {
     var cache = {};
     var masterConfig = module.config ? module.config() : {};
     var locale = null;

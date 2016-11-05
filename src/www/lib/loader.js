@@ -1,4 +1,4 @@
-define(function () {
+define('loader', function () {
     return {
         load: function(props) {
             var xhr;

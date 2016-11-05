@@ -1,14 +1,34 @@
-define(['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.html', "text!menu_item.html", "loader"], function (module, toasterTemplate, toastTemplate, spinnerTemplate, menuItemTemplate, loader) {
+define('ui', ['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.html', "text!menu_item.html", "translator"], function (module, toasterTemplate, toastTemplate, spinnerTemplate, menuItemTemplate, t) {
     var menuElement;
     var toaster;
     var spinner;
+    var activeSite = null;
+    var main = document.querySelector('#content');
+    
     var masterConfig = (module.config && module.config()) || {};
+    
+    t.load('general');
     
     function getMenuElement() {
         if (!menuElement) {
             menuElement = document.querySelector('.main-navigation');
         }
         return menuElement;
+    }
+    
+    function hideMenu() {
+        var menuElement = getMenuElement();
+        menuElement.className = menuElement.className.replace(' active', '');
+    }
+    
+    function loadStyles(site, name) {
+        var id = 'site-styles_' + name;
+        if (!document.querySelector('#'+id)) {
+            var style = document.createElement("style");
+            style.setAttribute('id', id);
+            style.innerHTML = site.styles;
+            document.getElementsByTagName("head")[0].appendChild(style);
+        }
     }
     
     function getSpinnerElement(element) {
@@ -47,6 +67,9 @@ define(['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.html', "
     }
     
     function createToast(message, type) {
+        if (type === 'error') {
+            console.error(message);
+        }
         var temp = document.createElement('div');
         temp.innerHTML = toastTemplate
             .replace(/{message}/g, message)
@@ -80,8 +103,34 @@ define(['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.html', "
             }
         },
         hideMenu: function() {
-            var menuElement = getMenuElement();
-            menuElement.className = menuElement.className.replace(' active', '');
+            hideMenu();
+        },
+        navigate: function(siteName) {
+            if (!siteName) {
+                siteName = window.location.hash.replace('#', '');
+            }
+            t.load(siteName + '/strings', function() {
+                require(['sites/' + siteName], function(site) {
+                    if (!!activeSite) {
+                        activeSite.dispose();
+                    }
+                    main.innerHTML = t.localize(site.template);
+                    loadStyles(site, siteName);
+                    site.init();
+                    activeSite = site;
+
+                    var oldNavItem = document.querySelector('.main-navigation li.active');
+                    if (!!oldNavItem) {
+                        oldNavItem.className = "";
+                    }
+                    var newNavItem = document.querySelector('.main-navigation a[href="#'+siteName+'"]').parentNode;
+                    if (!!newNavItem) {
+                        newNavItem.className = "active";
+                    }
+
+                    hideMenu();
+                });
+            });
         },
         showSpinner: function(element, context) {
             element = getSpinnerElement(element);
@@ -116,6 +165,9 @@ define(['module', 'text!toaster.html', 'text!toast.html', 'text!spinner.html', "
                 toaster.insertBefore(toast, toaster.lastElementChild);
             } else {
                 toaster.appendChild(toast);
+            }
+            while (toaster.children.length > 4) {
+                toaster.children[0].remove();
             }
             window.setTimeout(function() {
                 toast.remove();
