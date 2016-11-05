@@ -31,7 +31,8 @@ module.exports = function (grunt) {
         concat: {
             www: {
                 files: [
-                    { src: ['src/www/sites/maps.js', 'src/www/sites/maps/*.js'], dest: 'dist/www/sites/maps.js' }
+                    { src: ['src/www/sites/maps.js', 'src/www/sites/maps/*.js'], dest: 'dist/www/sites/maps.js' },
+                    { src: ['src/www/sites/overview.js', 'src/www/sites/overview/*.js'], dest: 'dist/www/sites/overview.js' }
                 ]
             },
             viewer: {
@@ -45,8 +46,9 @@ module.exports = function (grunt) {
             www: {
                 files: [
                     {expand: true, cwd: 'src/www/', src: ['css/**', 'lib/**', '*'], dest: 'dist/www/'},
-                    {expand: true, cwd: 'src/www/sites/', src: ['mail/**', 'overview/**', 'schedule/**', 'service/**', 'statistics/**', '*', '!**/lang/**'], dest: 'dist/www/sites/'},
-                    {expand: true, cwd: 'src/www/sites/maps/', src: ['*.html', '*.css'], dest: 'dist/www/sites/maps/'}
+                    {expand: true, cwd: 'src/www/sites/', src: ['mail/**', 'schedule/**', 'service/**', 'statistics/**', '*', '!**/lang/**'], dest: 'dist/www/sites/'},
+                    {expand: true, cwd: 'src/www/sites/maps/', src: ['*.html', '*.css'], dest: 'dist/www/sites/maps/'},
+                    {expand: true, cwd: 'src/www/sites/overview/', src: ['*.html', '*.css'], dest: 'dist/www/sites/overview/'}
                 ]
             },
             viewer: {
