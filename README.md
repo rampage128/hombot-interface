@@ -12,6 +12,7 @@ For simple hack-instructions visit: http://www.roboter-forum.com/showthread.php?
 This project uses the following external libraries:
 
 * [RequireJS](http://requirejs.org/) for asynchronous module definitions
+* [nodejs](https://nodejs.org/), [npm](https://www.npmjs.com/) and [grunt](http://gruntjs.com/) for building the sources
 
 ##License
 
