@@ -33,7 +33,7 @@ module.exports = function (grunt) {
                 files: [
                     { src: ['src/www/sites/maps.js', 'src/www/sites/maps/*.js'], dest: 'dist/www/sites/maps.js' },
                     { src: ['src/www/sites/overview.js', 'src/www/sites/overview/*.js'], dest: 'dist/www/sites/overview.js' },
-                    { src: ['src/www/lib/text.js', 'src/www/lib/loader.js', 'src/www/lib/translator.js', 'src/www/lib/ui.js'], dest: 'dist/www/lib/ui.js' }
+                    { src: ['src/www/lib/ui.js', 'src/www/lib/text.js', 'src/www/lib/loader.js', 'src/www/lib/translator.js'], dest: 'dist/www/lib/ui.js' }
                 ]
             },
             viewer: {
