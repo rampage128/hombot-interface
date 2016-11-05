@@ -6,11 +6,15 @@
         "repeat_status": "Wiederholen {0}",
         "CHARGING": "Lädt",
         "STANDBY": "Standby",
-        "UNDOCKING": "Abdocken",
+        "BACKMOVING_INIT": "Abdocken",
         "WORKING": "Aktiv",
         "PAUSE": "Pausiert",
         "HOMING": "Rückkehr",
         "overview_error": "Fehler beim aktualisieren des Status: {0}",
-        "send_command_error": "Fehler beim senden des Befehls {0} (Code {1})"
+        "send_command_error": "Fehler beim senden des Befehls {0} (Code {1})",
+        "Start": "Starten",
+        "Pause": "Pausieren",
+        "Home": "Nach Hause",
+        "Undock": "Abdocken"
     }
 }

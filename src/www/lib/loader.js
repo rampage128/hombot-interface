@@ -14,7 +14,7 @@ define(function () {
                         if (!!props.success) {
                             if (!props.type || props.type === 'plain') {
                                 props.success(xhr.responseText);
-                            } else if (props.type === 'binary') {
+                            } else if (props.type === 'binary' || props.type === 'arraybuffer') {
                                 props.success(xhr.response);
                             } else if (props.type === 'json') {
                                 try {
@@ -45,6 +45,8 @@ define(function () {
                 xhr.responseType = 'blob';
                 // hack to pass bytes through unprocessed.
                 xhr.overrideMimeType('text/plain; charset=x-user-defined');
+            } else if (props.type === 'arraybuffer') {
+                xhr.responseType = 'arraybuffer';
             }
 
             xhr.send();

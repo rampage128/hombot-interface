@@ -4,9 +4,15 @@ define(function(require) {
     var ui = require('ui');
     var loader = require('loader');
     var t = require('translator');
+    var Joystick = require('sites/overview/joystick');
+    var joystick = null;
+    
+    var currentStatus = null;
     
     function send(command, update, source) {
-        ui.showSpinner(source, 'action_command');
+        if (!!source) {
+            ui.showSpinner(source, 'action_command');
+        }
         loader.load({
             href: '/json.cgi?' +  command,
             success: function() {
@@ -39,6 +45,7 @@ define(function(require) {
             href: 'sites/overview/status.html',
             type: 'json',
             success: function(status) {
+                currentStatus = status;
                 elements.state.label.innerHTML = t.get(status.robot.state);
                 elements.state.icon.setAttribute('xlink:href', '#icon-state_' + status.robot.state.toLowerCase());
                 elements.repeat.icon.setAttribute('xlink:href', '#icon-repeat_' + status.robot.repeat);
@@ -49,8 +56,19 @@ define(function(require) {
                 elements.turbo.icon.setAttribute('xlink:href', '#icon-turbo_' + status.robot.turbo);
                 elements.battery.progress.style.width = status.robot.battery + '%';
                 elements.cpu.progress.style.width = (100 - status.robot.cpu.idle) + '%';
+                elements.controls.startstop.icon.setAttribute('xlink:href', status.robot.state !== 'WORKING' ? '#icon-state_working' : '#icon-state_pause');
+                elements.controls.startstop.label.innerHTML = t.get(status.robot.state !== 'WORKING' ? 'Start' : 'Pause');
+                elements.controls.homeundock.icon.setAttribute('xlink:href', status.robot.state !== 'CHARGING' ? '#icon-state_homing' : '#icon-state_backmoving_init');
+                elements.controls.homeundock.label.innerHTML = t.get(status.robot.state !== 'CHARGING' ? 'Home' : 'Undock');
+                
+                if (status.robot.state !== 'STANDBY') {
+                    joystick.stopListening();
+                } else {
+                    joystick.startListening();
+                }
             },
             error: function(code) {
+                currentStatus = null;
                 elements.state.label.innerHTML = '-';
                 elements.repeat.label.innerHTML = '-';
                 elements.mode.label.innerHTML = '-';
@@ -60,6 +78,33 @@ define(function(require) {
                 ui.toast(t.get('overview_error', [code.message]), 'error');
             },
             always: callback
+        });
+        
+        var context = elements.camera.canvas.getContext('2d');
+        var width = elements.camera.canvas.width;
+        var height = elements.camera.canvas.height;
+        var outputImage = context.createImageData(width, height);
+        var outputImageData = outputImage.data;
+        
+        loader.load({
+            href: 'images/snapshot.yuv',
+            type: 'arraybuffer',
+            success: function(response) {
+                var yuvData = new Uint8Array(response), y, u, v;
+                for (var i = 0, p = 0; i < outputImageData.length; i += 4, p += 1) {
+                    y = yuvData[ p ];
+                    v = yuvData[ Math.floor(width * height * 1.5 + p /2) ];
+                    u = yuvData[ Math.floor(width * height + p / 2) ];
+                    outputImageData[i]   = y + 1.371 * (v - 128);
+                    outputImageData[i+1] = y - 0.336 * (u - 128) - 0.698 * (v - 128);
+                    outputImageData[i+2] = y + 1.732 * (u - 128);
+                    outputImageData[i+3] = 255;
+                }
+                context.putImageData(outputImage,0,0);
+            },
+            error: function(code) {
+                console.log('bla ' + code);
+            }
         });
     };
     
@@ -94,15 +139,68 @@ define(function(require) {
                 cpu: {
                     label: document.querySelector('#status_cpu .progressbar__label'),
                     progress: document.querySelector('#status_cpu .progressbar__progress')
+                },
+                camera: {
+                    canvas: document.querySelector('#camera_canvas')
+                },
+                controls: {
+                    startstop: {
+                        icon: document.querySelector('#control_startstop use'),
+                        button: document.querySelector('#control_startstop'),
+                        label: document.querySelector('#control_startstop figcaption')
+                    },
+                    homeundock: {
+                        icon: document.querySelector('#control_homeundock use'),
+                        button: document.querySelector('#control_homeundock'),
+                        label: document.querySelector('#control_homeundock figcaption')
+                    }
+                },
+                joystick: {
+                    container: document.querySelector('#joystick_container'),
+                    stick: document.querySelector('#joystick_stick')
                 }
             };
-            
-            elements.battery.label.innerHTML = t.get('Battery');
-            elements.cpu.label.innerHTML = t.get('CPU Load');
-            
+                       
             elements.mode.button.onclick = function() { send('mode', true, this); };
             elements.turbo.button.onclick = function() { send('turbo', true, this); };
             elements.repeat.button.onclick = function() { send('repeat', true, this); };
+            elements.controls.startstop.button.onclick = function() { 
+                if (!!currentStatus) {
+                    if (currentStatus.robot.state !== 'WORKING') {
+                        send('{\"COMMAND\":\"CLEAN_START\"}', false, this);
+                    } else {
+                        send('{\"COMMAND\":\"PAUSE\"}', false, this);
+                    }
+                }
+            };
+            elements.controls.homeundock.button.onclick = function() { 
+                if (!!currentStatus) {
+                    if (currentStatus.robot.state !== 'CHARGING') {
+                        send('{\"COMMAND\":\"HOMING\"}', false, this);
+                    } else {
+                        send('{\"JOY\":\"BACKWARD\"}', false, this);
+                    }
+                }
+            };
+            
+            joystick = new Joystick(elements.joystick.container, elements.joystick.stick, {
+                release: function() {
+                    send('{\"JOY\":\"RELEASE\"}');
+                },
+                forward: function() {
+                    send('{\"JOY\":\"FORWARD\"}');
+                },
+                backward: function() {
+                    send('{\"JOY\":\"BACKWARD\"}');
+                },
+                left: function() {
+                    send('{\"JOY\":\"LEFT\"}');
+                },
+                right: function() {
+                    send('{\"JOY\":\"RIGHT\"}');
+                }
+            });
+            joystick.startListening();
             
             update();
         },
@@ -110,6 +208,9 @@ define(function(require) {
             if (!!updateTimer) {
                 window.clearTimeout(updateTimer);
                 updateTimer = null;
+            }
+            if (!!joystick) {
+                joystick.stopListening();
             }
         }
     };

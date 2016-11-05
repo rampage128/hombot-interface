@@ -1,21 +1,21 @@
-.status__display ul {
+.status__display > ul {
     margin: 0;
     padding: 4px;
 }
 
-.status__display li {
+.status__display > ul > li {
     display: inline-block;
     vertical-align: top;
     width: 50%;
 }
 
 @media (min-width: 480px) {
-    .status__display li {
+    .status__display > ul > li {
         width: 25%;
     }
 }
 
-.status__display li.large {
+.status__display > ul > li.large {
     width: 50%;
 }
 
@@ -29,13 +29,65 @@
 .status__icon {
     font-size: 0.75em;
     margin: 0;
-    text-align: center;
+    position: relative;
+    height: 0;
+    padding-bottom: 20%;
 }
 
 .status__icon > svg {
-    margin: 32px;
+    position: absolute;
+    left: 0;
+    width: 20%;
 }
 
+.status__icon > figcaption {
+    padding-left: 8px;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    right: 0;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.camera__wrapper canvas {
+    width: 100%;
+}
+
+.joystick__wrapper {
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+}
+
+.joystick__move {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: whitesmoke;
+    border: 1px solid gray;
+    border-radius: 50%;
+}
+
+.joystick__stick {
+    position: absolute;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 50%;
+    width: 30%;
+    height: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.overview__title {
+    margin: 16px 0 0 8px;
+}
 
 .progressbar__container {
     background-color: lightgray;
@@ -48,4 +100,23 @@
     border-radius: 2px;
     height: 16px;
     transition: width 1s ease;
+}
+
+.controls__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 -4px 8px;
+}
+
+.controls__item {
+    display: inline-block;
+    width: 50%;
+    vertical-align: middle;
+}
+
+.controls__button {
+    border: 1px solid gray;
+    border-radius: 2px;
+    padding: 8px;
+    margin: 0 4px;
 }

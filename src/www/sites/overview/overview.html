@@ -20,8 +20,8 @@
             <title>state_docking</title>
             <path fill="#333" class="path1" d="M5.016 18h13.969v2.016h-13.969v-2.016zM18.984 9l-6.984 6.984-6.984-6.984h3.984v-6h6v6h3.984z"></path>
         </symbol>
-        <symbol id="icon-state_undocking" viewBox="0 0 24 24">
-            <title>state_undocking</title>
+        <symbol id="icon-state_backmoving_init" viewBox="0 0 24 24">
+            <title>state_backmoving_init</title>
             <path fill="#333" class="path1" d="M5.016 18h13.969v2.016h-13.969v-2.016zM9 15.984v-6h-3.984l6.984-6.984 6.984 6.984h-3.984v6h-6z"></path>
         </symbol>
         <symbol id="icon-turbo_false" viewBox="0 0 24 24">
@@ -60,6 +60,7 @@
 </svg>
 
 <section class="status__display">
+    <h2 class="overview__title">{Status}</h2>
     <ul>
         <li>
             <div class="status__wrapper">
@@ -103,7 +104,7 @@
         </li><!--
         --><li class="large">
             <div class="status__wrapper" id="status_battery">
-                <div class="progressbar__label">Battery</div>
+                <div class="progressbar__label">{Battery}</div>
                 <div class="progressbar__container">
                     <div class="progressbar__progress" style="width: 0%;"></div>
                 </div>
@@ -111,9 +112,48 @@
         </li><!--
         --><li class="large">
             <div class="status__wrapper" id="status_cpu">
-                <div class="progressbar__label">CPU Load</div>
+                <div class="progressbar__label">{CPU Load}</div>
                 <div class="progressbar__container">
                     <div class="progressbar__progress" style="width: 0%;"></div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <h2 class="overview__title">{Controls}</h2>
+    <ul>
+        <li class="large">
+            <div class="status__wrapper camera__wrapper">
+                <ul class="controls__list">
+                    <li class="controls__item">
+                        <div class="status__wrapper controls__button" id="control_startstop">
+                            <figure class="status__icon ${JSON:REPEAT}" id="status_repeat">
+                                <svg viewBox="0 0 100 100">
+                                    <use xlink:href="#icon-state_working"></use>
+                                </svg>
+                                <figcaption>-</figcaption>
+                            </figure>
+                        </div>
+                    </li><!--
+                    --><li class="controls__item">
+                        <div class="status__wrapper controls__button" id="control_homeundock">
+                            <figure class="status__icon ${JSON:REPEAT}" id="status_repeat">
+                                <svg viewBox="0 0 100 100">
+                                    <use xlink:href="#icon-state_undocking"></use>
+                                </svg>
+                                <figcaption>-</figcaption>
+                            </figure>
+                        </div>
+                    </li>
+                </ul>
+                <canvas id="camera_canvas" width="320" height="240" />
+            </div>
+        </li><!--
+        --><li class="large">
+            <div class="status__wrapper">
+                <div class="joystick__wrapper" id="joystick_container">
+                    <div class="joystick__move">
+                        <div class="joystick__stick" id="joystick_stick"></div>
+                    </div>
                 </div>
             </div>
         </li>
