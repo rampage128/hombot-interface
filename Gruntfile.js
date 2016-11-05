@@ -67,13 +67,13 @@ module.exports = function (grunt) {
         "merge-json": {
             www: {
                 files: {
-                    "dist/www/lang/general.js": [ "src/www/lang/**/*.js" ],
-                    "dist/www/sites/mail/strings.js": [ "src/www/sites/mail/lang/**/*.js" ],
-                    "dist/www/sites/maps/strings.js": [ "src/www/sites/maps/lang/**/*.js" ],
-                    "dist/www/sites/overview/strings.js": [ "src/www/sites/overview/lang/**/*.js" ],
-                    "dist/www/sites/schedule/strings.js": [ "src/www/sites/schedule/lang/**/*.js" ],
-                    "dist/www/sites/service/strings.js": [ "src/www/sites/service/lang/**/*.js" ],
-                    "dist/www/sites/statistics/strings.js": [ "src/www/sites/statistics/lang/**/*.js" ]
+                    "dist/www/lang/general.json": [ "src/www/lang/**/*.json" ],
+                    "dist/www/sites/mail/strings.json": [ "src/www/sites/mail/lang/**/*.json" ],
+                    "dist/www/sites/maps/strings.json": [ "src/www/sites/maps/lang/**/*.json" ],
+                    "dist/www/sites/overview/strings.json": [ "src/www/sites/overview/lang/**/*.json" ],
+                    "dist/www/sites/schedule/strings.json": [ "src/www/sites/schedule/lang/**/*.json" ],
+                    "dist/www/sites/service/strings.json": [ "src/www/sites/service/lang/**/*.json" ],
+                    "dist/www/sites/statistics/strings.json": [ "src/www/sites/statistics/lang/**/*.json" ]
                 }
             }
         },
@@ -139,5 +139,5 @@ module.exports = function (grunt) {
     });
     
     grunt.registerTask('build-dev', ['copy', 'concat', 'createMenu', 'merge-json']);
-    grunt.registerTask('build', ['clean', 'copy', 'concat', 'createMenu', 'uglify', 'merge-json']);
+    grunt.registerTask('build', ['clean', 'copy', 'concat', 'createMenu', 'merge-json', 'uglify']);
 };

@@ -76,10 +76,10 @@ define('translator', ['module', 'loader'], function (module, loader) {
             var fileName = null;
             if (parts.length > 1) {
                 basePath = 'sites/' + parts[0] + '/';
-                fileName = parts[1] + '.js';
+                fileName = parts[1] + '.json';
             } else {
                 basePath = 'lang/';
-                fileName = path + '.js';
+                fileName = path + '.json';
             }
 
             loadTranslation(basePath + fileName, function(hasLanguage, hasLocale) {
