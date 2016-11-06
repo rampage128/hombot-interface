@@ -136,7 +136,9 @@ define("sites/overview/joystick", [], function() {
             container.removeEventListener('touchend', events.mouseup, true);
             container.removeEventListener('touchcancel', events.mouseup, true);
             active = false;
-            execCallback(callbacks.release);
+            if (!!interval) {
+                execCallback(callbacks.release);
+            }
         };
     };
 });
