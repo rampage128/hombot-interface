@@ -1,0 +1,72 @@
+.schedule {
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 16px 8px;
+        
+        li {
+            position: relative;
+            margin-bottom: 8px;
+        }
+        
+        input[type=submit],
+        input[type=reset] {
+            margin-top: 8px;
+        }
+        
+        input[type=submit] {
+            width: 120px;    
+        }
+        
+        input[type=reset] {
+            float: right;
+            width: 102px;
+        }
+    }
+    
+    &__label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 120px;
+        
+        label {
+            display: block;
+            background-color: white;
+            padding: 8px;
+            border-radius: 2px;
+            font-size: 0.8em;
+            cursor: pointer;
+            line-height: 1.25;
+            border: 1px solid lightgray;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        input {
+            margin: 0 4px 0 0;
+            vertical-align: -1px;
+        }
+    }
+    
+    &__time {
+        margin-left: 128px;
+        margin-right: 110px;
+    }
+    
+    &__type {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 102px;
+    }
+    
+    &__time,
+    &__type {
+        input,
+        select {
+            width: 100%;
+        }
+    }
+}

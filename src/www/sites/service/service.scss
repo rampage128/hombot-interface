@@ -1,0 +1,40 @@
+.service {
+    &__wrapper {
+        background-color: white;
+        border-radius: 2px;
+        margin-top: 8px;
+        padding: 16px;
+    }
+    
+    &__title {
+        margin: 0 0 8px;
+        padding: 0 0 8px;
+        border-bottom: 1px solid lightgrey;
+    }
+}
+
+.software {
+    &__version {
+        padding: 8px 0 16px;
+    }
+    
+    &__form {
+        border-top: 1px solid lightgrey;
+        margin: 0;
+        padding-top: 16px;
+    }
+}
+
+.properties {
+    &__form {
+        margin-top: 16px;
+    }
+}
+
+.download {
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+}

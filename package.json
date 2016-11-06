@@ -8,6 +8,7 @@
     "grunt-contrib-concat": "~1.0.1",
     "grunt-contrib-copy": "~1.0.0",
     "grunt-contrib-uglify": "~2.0.0",
-    "grunt-merge-json": "^0.9.5"
+    "grunt-merge-json": "^0.9.5",
+    "grunt-sass": "^1.2.1"
   }
 }

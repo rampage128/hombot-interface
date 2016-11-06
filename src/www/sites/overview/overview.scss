@@ -1,0 +1,154 @@
+.status {
+    &__wrapper {
+        background-color: white;
+        border-radius: 2px;
+        margin: 4px;
+        padding: 8px;
+    }
+    
+    &__display {
+        > ul {
+            margin: 0;
+            padding: 4px;
+            
+            > li {
+                display: inline-block;
+                vertical-align: top;
+                width: 50%;
+                
+                &.large {
+                    width: 50%;
+                }
+                
+                @media (min-width: 480px) {
+                    width: 25%;
+                }
+            }
+        }
+    }
+    
+    &__icon {
+        font-size: 0.75em;
+        margin: 0;
+        position: relative;
+        height: 0;
+        padding-bottom: 20%;
+        
+        &--clickable {
+            cursor: pointer;
+        }
+        
+        > svg {
+            position: absolute;
+            left: 0;
+            width: 20%;
+        }
+        
+        > figcaption {
+            padding-left: 8px;
+            position: absolute;
+            top: 50%;
+            left: 20%;
+            right: 0;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+.camera {
+    &__wrapper {
+        canvas {
+            width: 100%;
+            border-radius: 2px;
+            background-color: lightgray;
+        }
+    }
+}
+
+.joystick {
+    &__wrapper {
+        height: 0;
+        padding-bottom: 100%;
+        position: relative;
+    }
+    
+    &__move {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#666666+20,f5f5f5+100 */
+        background: rgb(102,102,102); /* Old browsers */
+        background: -moz-radial-gradient(center, ellipse cover,  rgba(102,102,102,1) 20%, rgba(245,245,245,1) 100%); /* FF3.6-15 */
+        background: -webkit-radial-gradient(center, ellipse cover,  rgba(102,102,102,1) 20%,rgba(245,245,245,1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: radial-gradient(ellipse at center,  rgba(102,102,102,1) 20%,rgba(245,245,245,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666666', endColorstr='#f5f5f5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+        box-shadow: inset 0px 0px 16px 0px rgba(0,0,0,0.75);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: whitesmoke;
+        border: 1px solid gray;
+        border-radius: 50%;
+        
+        &--disabled {
+            opacity: .5;
+        }
+    }
+    
+    &__stick {
+        position: absolute;
+        background-color: white;
+        border: 1px solid gray;
+        border-radius: 50%;
+        box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.75);
+        width: 30%;
+        height: 30%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.overview__title {
+    margin: 16px 0 0 8px;
+}
+
+.progressbar {
+    &__container {
+        background-color: lightgray;
+        border-radius: 2px;
+        height: 16px;
+    }
+    
+    &__progress {
+        background-color: #c40452;
+        border-radius: 2px;
+        height: 16px;
+        transition: width 1s ease;
+    }
+}
+
+.controls {
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0 -4px 8px;
+    }
+    
+    &__item {
+        display: inline-block;
+        width: 50%;
+        vertical-align: middle;
+    }
+    
+    &__button {
+        border: 1px solid gray;
+        border-radius: 2px;
+        padding: 8px;
+        margin: 0 4px;
+        cursor: pointer;
+    }
+}

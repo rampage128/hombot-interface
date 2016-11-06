@@ -13,6 +13,24 @@ module.exports = function (grunt) {
                 src: ['dist/*.*']   
             }
         },
+        sass: {
+            www: {
+                files: [
+                    { src: ['src/www/sites/mail/mail.scss'], dest: 'dist/www/sites/mail/mail.css' },
+                    { src: ['src/www/sites/maps/maps.scss'], dest: 'dist/www/sites/maps/maps.css' },
+                    { src: ['src/www/sites/overview/overview.scss'], dest: 'dist/www/sites/overview/overview.css' },
+                    { src: ['src/www/sites/schedule/schedule.scss'], dest: 'dist/www/sites/schedule/schedule.css' },
+                    { src: ['src/www/sites/service/service.scss'], dest: 'dist/www/sites/service/service.css' },
+                    { src: ['src/www/sites/statistics/statistics.scss'], dest: 'dist/www/sites/statistics/statistics.css' }
+                ]
+            },
+            viewer: {
+                files: [
+                    { src: ['src/www/css/main.scss'], dest: 'dist/www/css/main.css' },
+                    { src: ['src/www/css/*.scss', 'src/www/sites/maps/*.scss'], dest: 'dist/mapviewer/styles.css' }
+                ]
+            }
+        },
         uglify: {
             options: {
                 mangle: {
@@ -38,18 +56,17 @@ module.exports = function (grunt) {
             },
             viewer: {
                 files: [
-                    { src: ['src/mapviewer/mapviewer.js', 'src/www/sites/maps/*.js'], dest: 'dist/mapviewer/mapviewer.js' },
-                    { src: ['src/www/css/*.css', 'src/www/sites/maps/*.css'], dest: 'dist/mapviewer/styles.css' }
+                    { src: ['src/mapviewer/mapviewer.js', 'src/www/sites/maps/*.js'], dest: 'dist/mapviewer/mapviewer.js' }
                 ]
             }
         },
         copy: {
             www: {
                 files: [
-                    {expand: true, cwd: 'src/www/', src: ['css/**', 'lib/require.js', 'lib/ui.js', 'lib/*.html', '*'], dest: 'dist/www/'},
-                    {expand: true, cwd: 'src/www/sites/', src: ['mail/**', 'schedule/**', 'service/**', 'statistics/**', '*', '!**/lang/**'], dest: 'dist/www/sites/'},
-                    {expand: true, cwd: 'src/www/sites/maps/', src: ['*.html', '*.css'], dest: 'dist/www/sites/maps/'},
-                    {expand: true, cwd: 'src/www/sites/overview/', src: ['*.html', '*.css'], dest: 'dist/www/sites/overview/'}
+                    {expand: true, cwd: 'src/www/', src: ['lib/require.js', 'lib/ui.js', 'lib/*.html', '*'], dest: 'dist/www/'},
+                    {expand: true, cwd: 'src/www/sites/', src: ['mail/**', 'schedule/**', 'service/**', 'statistics/**', '*', '!**/lang/**', '!**/*.scss'], dest: 'dist/www/sites/'},
+                    {expand: true, cwd: 'src/www/sites/maps/', src: ['*.html'], dest: 'dist/www/sites/maps/'},
+                    {expand: true, cwd: 'src/www/sites/overview/', src: ['*.html'], dest: 'dist/www/sites/overview/'}
                 ]
             },
             viewer: {
@@ -110,6 +127,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-merge-json');
     grunt.loadNpmTasks('grunt-contrib-compress');
     
@@ -148,7 +166,7 @@ module.exports = function (grunt) {
         });
     });
     
-    grunt.registerTask('build-dev', ['clean', 'copy', 'concat', 'createMenu', 'merge-json']);
-    grunt.registerTask('build-dist', ['clean', 'copy', 'concat', 'createMenu', 'merge-json', 'uglify']);
+    grunt.registerTask('build-dev', ['clean', 'sass', 'copy', 'concat', 'createMenu', 'merge-json']);
+    grunt.registerTask('build-dist', ['clean', 'sass', 'copy', 'concat', 'createMenu', 'merge-json', 'uglify']);
     grunt.registerTask('build-release', ['build-dist', 'compress']);
 };

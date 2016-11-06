@@ -1,0 +1,77 @@
+%odd {
+    background-color: whitesmoke;
+}
+
+.stats-category {
+    &__list {
+        list-style:none;
+        padding: 0;
+        margin: 16px 0;
+    }
+    
+    &__item {
+        margin-bottom: 16px;
+        
+        @media (min-width: 480px) {
+            display: inline-block;
+            width: 50%;
+            vertical-align: top;
+        }
+    }
+    
+    &__wrapper {
+        background-color: white;
+        border-radius: 2px;
+        margin: 0 8px;
+        padding: 16px;
+    }
+    
+    &__title {
+        margin: 0 0 8px;
+        padding: 0 0 8px;
+        border-bottom: 1px solid lightgrey;
+    }
+}
+
+.stats-rows {
+    &__list {
+        margin: 0;
+    }
+    
+    &__key,
+    &__value {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+        margin: 0;
+    }
+       
+    &__key {
+        &:nth-child(4n-1) {
+            @extend %odd;
+        }
+    }
+    
+    &__value {
+        &:nth-child(4n) {
+            @extend %odd;
+        }
+        
+        &--int {
+            text-align: right;
+        }
+    }
+    
+    &__text {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 4px;
+        
+        &--label {
+            &::after {
+                content: ":";
+            }
+        }
+    }
+}
