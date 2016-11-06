@@ -110,19 +110,19 @@ define(function(require) {
         if (elements.reception.checkbox.checked) {
             // TODO ERROR CHECKING
             get +=  '&P3ENABLE=yes' +
-                    '&P3SIGN=' + elements.reception.sign.value +
-                    '&P3SERVER=' + elements.reception.server.value +
-                    '&P3CYCLE=' + elements.reception.cycle.value +
-                    '&P3USER=' + elements.reception.username.value +
-                    '&P3PASS=' + elements.reception.password.value;
+                    '&P3SIGN=' + encodeURIComponent(elements.reception.sign.value) +
+                    '&P3SERVER=' + encodeURIComponent(elements.reception.server.value) +
+                    '&P3CYCLE=' + encodeURIComponent(elements.reception.cycle.value) +
+                    '&P3USER=' + encodeURIComponent(elements.reception.username.value) +
+                    '&P3PASS=' + encodeURIComponent(elements.reception.password.value);
         }        
         if (elements.dispatch.checkbox.checked) {
             // TODO ERROR CHECKING
             get +=  '&SLENABLE=yes' +
-                    '&RECEIVER=' + elements.dispatch.recipient.value +
-                    '&GATEWAY=' + elements.dispatch.server.value +
-                    '&USER=' + elements.dispatch.username.value +
-                    '&PASS=' + elements.dispatch.password.value;
+                    '&RECEIVER=' + encodeURIComponent(elements.dispatch.recipient.value) +
+                    '&GATEWAY=' + encodeURIComponent(elements.dispatch.server.value) +
+                    '&USER=' + encodeURIComponent(elements.dispatch.username.value) +
+                    '&PASS=' + encodeURIComponent(elements.dispatch.password.value);
         }
         
         if (!erroneous) {
