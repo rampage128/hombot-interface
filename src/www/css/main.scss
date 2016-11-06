@@ -175,7 +175,7 @@ header {
             text-decoration: none;
         }
         
-        .active a {
+        &.active a {
             background-color: #c40452;
             color: white;
         }
