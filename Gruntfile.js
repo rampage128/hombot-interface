@@ -93,6 +93,16 @@ module.exports = function (grunt) {
                     "dist/www/app.js": [ "src/www/sites/*.js" ]
                 }
             }
+        },
+        compress: {
+            full: {
+                options: {
+                    archive: 'dist/hombot-interface_<%= pkg.version %>.zip'
+                },
+                files: [
+                    {expand: true, cwd: 'dist/', src: ['**/*'], dest: '/'}
+                ]
+            }
         }
     });
     
@@ -102,6 +112,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-merge-json');
     grunt.loadNpmTasks('grunt-include-source');
+    grunt.loadNpmTasks('grunt-contrib-compress');
     
     grunt.registerMultiTask('createMenu', function() {
         var options = (this.options && this.options()) || {};
@@ -138,6 +149,7 @@ module.exports = function (grunt) {
         });
     });
     
-    grunt.registerTask('build-dev', ['copy', 'concat', 'createMenu', 'merge-json']);
-    grunt.registerTask('build', ['clean', 'copy', 'concat', 'createMenu', 'merge-json', 'uglify']);
+    grunt.registerTask('build-dev', ['clean', 'copy', 'concat', 'createMenu', 'merge-json']);
+    grunt.registerTask('build-dist', ['clean', 'copy', 'concat', 'createMenu', 'merge-json', 'uglify']);
+    grunt.registerTask('build-release', ['build-dist', 'compress']);
 };
