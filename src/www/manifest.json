@@ -1,0 +1,19 @@
+{
+	"name": "Hombot",
+	"icons": [
+		{
+			"src": "\/android-chrome-192x192.png?v=00rPX7XK6M",
+			"sizes": "192x192",
+			"type": "image\/png"
+		},
+		{
+			"src": "\/android-chrome-256x256.png?v=00rPX7XK6M",
+			"sizes": "256x256",
+			"type": "image\/png"
+		}
+	],
+	"theme_color": "#c40452",
+	"start_url": "\/#overview",
+	"display": "standalone",
+	"orientation": "portrait"
+}
