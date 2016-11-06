@@ -163,8 +163,12 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
              */
             spinner.style.width = element.offsetWidth + 'px';
             spinner.style.height = element.offsetHeight + 'px';
-            spinner.style.marginLeft = element.offsetLeft - spinner.offsetLeft + 'px';
-            spinner.style.marginTop = element.offsetTop - spinner.offsetTop + 'px';
+            if (spinner.offsetLeft > 0) {
+                spinner.style.marginLeft = element.offsetLeft - spinner.offsetLeft + 'px';
+            }
+            if (spinner.offsetTop > 0) {
+                spinner.style.marginTop = element.offsetTop - spinner.offsetTop + 'px';
+            }
         },
         hideSpinner: function(context) {
             var selector = getSpinnerSelector(context);
