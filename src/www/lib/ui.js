@@ -57,14 +57,7 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
         }
         return selector;
     }
-    
-    function getSpinnerSize(element) {
-        return {
-            width: element.clientWidth,
-            height: element.clientHeight
-        };
-    }
-    
+      
     function getToaster() {
         if (!toaster) {
             toaster = document.querySelector('#toaster');
@@ -88,13 +81,17 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
             .replace(/{type}/g, type);
         return temp.children[0];
     }
-    
+        
     function createSpinner() {
         if (!spinner) {
             var container = document.createElement('DIV');
             container.innerHTML = getTemplate('spinner');
             spinner = container.children[0];
         }
+        spinner.style.width = 0;
+        spinner.style.height = 0;
+        spinner.style.marginLeft = 0;
+        spinner.style.marginTop = 0;
         return spinner;
     }
        
@@ -150,18 +147,24 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
             if (document.querySelector(selector)) {
                 return;
             }
-            var position = getSpinnerSize(element);
             var spinner = createSpinner();
             if (!!context) {
                 spinner.setAttribute('id', context);
             }
-            spinner.style.width = position.width + 'px';
-            spinner.style.height = position.height + 'px';
             if (element.hasChildNodes()) {
                 element.insertBefore(spinner, element.children[0]);
             } else {
                 element.appendChild(spinner);
             }
+            /* 
+             * We compute the final position and dimension after adding the 
+             * spinner. This way we can honor paddings, border and other stuff
+             * regardless of their unit. :-)
+             */
+            spinner.style.width = element.offsetWidth + 'px';
+            spinner.style.height = element.offsetHeight + 'px';
+            spinner.style.marginLeft = element.offsetLeft - spinner.offsetLeft + 'px';
+            spinner.style.marginTop = element.offsetTop - spinner.offsetTop + 'px';
         },
         hideSpinner: function(context) {
             var selector = getSpinnerSelector(context);
