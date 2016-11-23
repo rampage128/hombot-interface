@@ -118,6 +118,7 @@ define("sites/maps/maprenderer", [], function() {
                 case 'TRAPPED':
                     ctx.strokeStyle = '#FF00FF';
                     break;
+                case 'TRAPPED_END':
                 case 'TRAPPED_HOMING':
                     ctx.strokeStyle = '#00FFFF';
                     break;
@@ -161,6 +162,7 @@ define("sites/maps/maprenderer", [], function() {
                 case 'START':
                     drawSVGIcon('map_start', position, '#00ffff', ctx);
                     break;
+                case 'TRAPPED_END':
                 case 'END':
                     drawSVGIcon('map_finish', position, '#00ff00', ctx);
                     break;
