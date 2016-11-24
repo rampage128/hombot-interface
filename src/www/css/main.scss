@@ -35,6 +35,10 @@ input, select, textarea {
     border: 1px solid lightgray;
 }
 
+input[type=file] {
+    padding: 4px;
+}
+
 canvas {
     box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -326,4 +330,9 @@ main {
             width: 100%;
         }
     }
+}
+
+/* OOCSS */
+.is-hidden {
+    display: none !important;
 }
