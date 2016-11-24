@@ -6,12 +6,12 @@
                 <div class="software__version">
                     ${LGSRV:VERSION}
                 </div>
-                <form id="fileupload" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                <form id="software_form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                     <dl class="form__wrapper software__form">
                         <dt class="form__label"><label for="software_update">{Update}</label></dt>
                         <dd class="form__field direct">
-                            <div class="form__input"><input type="file" name="myfile" id="software_update" /></div>
-                            <div class="form__submit"><input type="submit" name="submit" value="{Upload}" /></div>
+                            <div class="form__input"><input type="file" name="myfile" id="software_field" /><div id="software_response" class="is-hidden"></div></div>
+                            <div class="form__submit"><input type="submit" name="submit" value="{Upload}" id="software_button" /></div>
                         </dd>
                     </dl>
                 </form>
