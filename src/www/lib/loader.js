@@ -37,7 +37,7 @@ define('loader', function () {
                     }
                 }
             };
-            xhr.open("GET", props.href, true);
+            xhr.open(!props.method ? 'GET' : props.method, props.href, true);
             xhr.timeout = 8000;
 
             if (props.type === 'binary') {
@@ -49,7 +49,7 @@ define('loader', function () {
                 xhr.responseType = 'arraybuffer';
             }
 
-            xhr.send();
+            xhr.send(props.method === 'POST' ? props.data : null);
         }
     };
 });
