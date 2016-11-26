@@ -332,6 +332,91 @@ main {
     }
 }
 
+.dialog {
+    &__wrapper {
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        text-align: center;
+        top: 0;
+        z-index: 10;
+        
+        &::after {
+            content: " ";
+            display: inline-block;
+            height: 100%;
+            overflow: hidden;
+            vertical-align: middle;
+            width: 0;
+        }
+    }
+    
+    &__back {
+        background-color: black;
+        bottom: 0;
+        left: 0;
+        opacity: .75;
+        position: absolute;
+        right: 0;
+        top: 0;        
+    }
+    
+    &__window {
+        background-color: white;
+        border-radius: 3px;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 
+            0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        display: inline-block;
+        position: relative;
+        text-align: left;
+        vertical-align: middle;
+    }
+    
+    &__title {
+        padding: 16px;
+        margin: 0;
+    }
+    
+    &__content {
+        max-height: 60vh;
+        max-width: 80vw;
+        overflow: auto;
+        padding: 0 16px;
+    }
+    
+    &-action {
+        &__container {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0;
+            text-align: right;
+        }
+        
+        &__item {
+            display: inline-block;
+            text-align: center;
+            
+            &--default .dialog-action__target {
+                font-weight: bold;
+                color: #c40452;
+            }
+            
+            &--additional {
+                float: left;
+            }
+        }
+        
+        &__target {
+            background: transparent;
+            border: 0;
+            display: block;
+            font-size: 1em;
+            padding: 8px 16px;
+        }
+    }
+}
+
 /* OOCSS */
 .is-hidden {
     display: none !important;

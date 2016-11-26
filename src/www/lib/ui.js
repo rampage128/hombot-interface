@@ -94,6 +94,14 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
         spinner.style.marginTop = 0;
         return spinner;
     }
+    
+    function hideDialog() {
+        var dialogElement = document.querySelector('#dialog');
+        if (!!dialogElement) {
+            dialogElement.className += ' is-hidden';
+            dialogElement.remove();
+        }
+    }
        
     return {
         createMenu: function() {
@@ -191,6 +199,54 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
             window.setTimeout(function() {
                 toast.remove();
             }, 10000);
+        },
+        showDialog: function(title, contentHTML, actions) {
+            var dialogElement = document.querySelector('#dialog');
+            if (!!dialogElement) {
+                dialogElement.remove();
+            }
+            var temp = document.createElement('DIV');
+            temp.innerHTML = getTemplate('dialog');
+            dialogElement = temp.children[0];
+                    
+            var actionBar = dialogElement.querySelector('.js_dialog_action_bar');
+            if (actionBar.children.length > 0) {
+                actionBar.innerHTML = '';
+            }            
+            actions.forEach(function(action) {
+                var temp = document.createElement('DIV');
+                temp.innerHTML = getTemplate('dialog_action')
+                    .replace(/{label}/g, action.label);
+                var actionElement = temp.children[0];
+                
+                var actionTarget = actionElement.querySelector('.js_dialog_action_target');
+                actionTarget.addEventListener('click', action.event, true);
+                
+                if (!!action.type) {
+                    actionElement.className += ' dialog-action__item--' + action.type;
+                    if (action.type === 'cancel') {
+                        var backElement = dialogElement.querySelector('.js_dialog_back');
+                        backElement.addEventListener('click', action.event, true);
+                    }
+                }
+                
+                actionBar.appendChild(actionElement);
+            });
+            
+            dialogElement.querySelector('.js_dialog_content').innerHTML = contentHTML;
+            var titleElement = dialogElement.querySelector('.js_dialog_title');
+            if (!title) {
+                titleElement.innerHTML = '';
+                titleElement.className += ' is-hidden';
+            } else {
+                titleElement.innerHTML = title;
+                titleElement.className = titleElement.className.replace(' is-hidden', '');
+            }      
+            
+            document.body.appendChild(dialogElement);
+        },
+        hideDialog: function() {
+            hideDialog();
         }
     };
 });
