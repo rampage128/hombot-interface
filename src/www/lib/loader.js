@@ -1,4 +1,19 @@
 define('loader', function () {
+
+    function parseXml(source) {
+        if (typeof window.DOMParser !== 'undefined') {
+            return ( new window.DOMParser() ).parseFromString(source, 'text/xml');
+        } else if (typeof window.ActiveXObject !== 'undefined' &&
+               new window.ActiveXObject('Microsoft.XMLDOM')) {
+            var xmlDoc = new window.ActiveXObject('Microsoft.XMLDOM');
+            xmlDoc.async = 'false';
+            xmlDoc.loadXML(source);
+            return xmlDoc;
+        }
+        
+        throw new Error('No XML parser found');
+    }
+    
     return {
         load: function(props) {
             var xhr;
@@ -20,6 +35,15 @@ define('loader', function () {
                                 try {
                                     var json = JSON.parse(xhr.responseText.replace(/(?:\r\n|\r|\n)/g, ''));
                                     props.success(json);
+                                } catch(e) {
+                                    if (!!props.error) {
+                                        props.error(e);
+                                    }
+                                }
+                            } else if (props.type === 'xml') {
+                                try {
+                                    var xml = parseXml(xhr.responseText);
+                                    props.success(xml);
                                 } catch(e) {
                                     if (!!props.error) {
                                         props.error(e);
