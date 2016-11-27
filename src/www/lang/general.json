@@ -5,6 +5,7 @@
         "SPOT": "Spot",
         "Save": "Save",
         "Reset": "Reset",
+        "Cancel": "Cancel",
         "on": "on",
         "off": "off",
         "error_fileapi_support": "File api is not supported in this browser"

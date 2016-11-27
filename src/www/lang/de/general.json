@@ -5,6 +5,7 @@
         "SPOT": "Spiralmodus",
         "Save": "Speichern",
         "Reset": "Zurücksetzen",
+        "Cancel": "Abbrechen",
         "on": "an",
         "off": "aus",
         "error_fileapi_support": "Die file-api wird in diesem browser nicht unterstützt"
