@@ -24,7 +24,7 @@ body {
     font-family: sans-serif, Arial, Helvetica;
 }
 
-input, select, textarea {
+input, select, textarea, button {
     box-sizing: border-box;
     -ms-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -49,14 +49,18 @@ canvas {
 input[type=submit] {
     background-color: #c40452;
     border-radius: 2px;
-    border: 0;
+    border: 1px solid #c40452;
     color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-input[type=reset] {
+input[type=reset], button {
     background-color: lightgray;
     border-radius: 2px;
-    border: 0;
+    border: 1px solid lightgray;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 input[disabled], select[disabled], textarea[disabled] {
@@ -238,6 +242,7 @@ main {
         left: 0;
         right: 0;
         bottom: 0;
+        z-index: 11;
     }
     
     &__container {
@@ -253,6 +258,11 @@ main {
         
         &--success {
             background-color: green;
+            color: white;
+        }
+        
+        &--warning {
+            background-color: darkkhaki;
             color: white;
         }
         
@@ -287,8 +297,10 @@ main {
     &__label {
         float: left;
         width: 120px;
+        line-height: 1.4;
         
         label {
+            display: block;
             font-size: 0.8em;
             overflow: hidden;
             padding: 8px 0;
@@ -316,7 +328,7 @@ main {
                 top: 0;
                 width: 120px;
 
-                input {
+                input, button {
                     width: 100%;
                 }
             }
@@ -329,6 +341,11 @@ main {
         > select {
             width: 100%;
         }
+    }
+    
+    &__hint {
+        font-size: 0.6em;
+        color: grey;
     }
 }
 
