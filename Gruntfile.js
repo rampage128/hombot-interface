@@ -51,6 +51,7 @@ module.exports = function (grunt) {
                 files: [
                     { src: ['src/www/sites/maps.js', 'src/www/sites/maps/*.js'], dest: 'dist/www/sites/maps.js' },
                     { src: ['src/www/sites/overview.js', 'src/www/sites/overview/*.js'], dest: 'dist/www/sites/overview.js' },
+                    { src: ['src/www/sites/service.js', 'src/www/sites/service/*.js'], dest: 'dist/www/sites/service.js' },
                     { src: ['src/www/lib/ui.js', 'src/www/lib/text.js', 'src/www/lib/loader.js', 'src/www/lib/translator.js'], dest: 'dist/www/lib/ui.js' }
                 ]
             },
@@ -64,9 +65,10 @@ module.exports = function (grunt) {
             www: {
                 files: [
                     {expand: true, cwd: 'src/www/', src: ['lib/require.js', 'lib/ui.js', 'lib/*.html', '*'], dest: 'dist/www/'},
-                    {expand: true, cwd: 'src/www/sites/', src: ['mail/**', 'schedule/**', 'service/**', 'statistics/**', '*', '!**/lang/**', '!**/*.scss'], dest: 'dist/www/sites/'},
+                    {expand: true, cwd: 'src/www/sites/', src: ['mail/**', 'schedule/**', 'statistics/**', '*', '!**/lang/**', '!**/*.scss'], dest: 'dist/www/sites/'},
                     {expand: true, cwd: 'src/www/sites/maps/', src: ['*.html'], dest: 'dist/www/sites/maps/'},
-                    {expand: true, cwd: 'src/www/sites/overview/', src: ['*.html'], dest: 'dist/www/sites/overview/'}
+                    {expand: true, cwd: 'src/www/sites/overview/', src: ['*.html'], dest: 'dist/www/sites/overview/'},
+                    {expand: true, cwd: 'src/www/sites/service/', src: ['*.html'], dest: 'dist/www/sites/service/'}
                 ]
             },
             viewer: {

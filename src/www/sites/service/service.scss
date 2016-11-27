@@ -46,3 +46,66 @@
         text-decoration: none;
     }
 }
+
+.xml-edit {   
+    &__label {
+        font-size: 0.7em;
+        
+        & label {
+            font-size: 1em;
+        }
+    }
+    
+    @media (max-width: 640px) {
+        &__label {
+            border-top: 1px solid lightgrey;
+            display: block;
+            float: none;
+            margin: 0;
+            width: auto;
+        }
+
+        &__field {
+            margin-left: 0;
+        }
+    }
+    
+    @media (min-width: 641px) {       
+        &__label {
+            width: 220px;
+            clear: left;
+            min-height: 2.8em;
+            
+            &::after {
+                content: " ";
+                display: inline-block;
+                height: 2.8em;
+                overflow: hidden;
+                vertical-align: middle;
+                width: 0;
+            }
+            
+            & label {
+                display: inline-block;
+                line-height: 1.4;
+                max-height: 2.8em;
+                max-width: 200px;
+                padding: 0;
+                vertical-align: middle;
+                white-space: normal;
+            }
+        }
+        
+        &__field {
+            margin-left: 228px;
+        }
+    }
+    
+    &__field.direct &__input {
+        margin-right: 88px;
+    }
+    
+    &__field.direct &__submit {
+        width: 80px;
+    }
+}
