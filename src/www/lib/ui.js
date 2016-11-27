@@ -200,7 +200,7 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
                 toast.remove();
             }, 10000);
         },
-        showDialog: function(title, contentHTML, actions) {
+        showDialog: function(title, content, actions) {
             var dialogElement = document.querySelector('#dialog');
             if (!!dialogElement) {
                 dialogElement.remove();
@@ -233,7 +233,12 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
                 actionBar.appendChild(actionElement);
             });
             
-            dialogElement.querySelector('.js_dialog_content').innerHTML = contentHTML;
+            var contentContainer = dialogElement.querySelector('.js_dialog_content');
+            if (content.nodeType > 0) {
+                contentContainer.appendChild(content);
+            } else {
+                contentContainer.innerHTML = content;
+            }
             var titleElement = dialogElement.querySelector('.js_dialog_title');
             if (!title) {
                 titleElement.innerHTML = '';
