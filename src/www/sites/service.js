@@ -1,6 +1,8 @@
 define(function(require) {
     var elements = null;
     var xmlEditor = null;
+    var manualProperties = {};
+    var updateTimer = 0;
     
     var subviews = { 
         xml_form: require('text!./service/xml_form.html'),
@@ -35,6 +37,114 @@ define(function(require) {
             fileName = elements.upload.field.value.split('\\');
         }
         return fileName[fileName.length - 1];
+    }
+        
+    function formatDateTime(date, time) {
+        var dateValues = date.split("/");
+        var timeValues = time.split(" ");
+        var timeModifier = timeValues[1];
+        timeValues = timeValues[0].split(':');      
+        
+        if (timeModifier === 'PM') {
+            timeValues[0] = parseInt(timeValues[0]) + 12;
+        }
+
+        return 'yyyy-MM-ddTHH:mm:SS'
+                .replace(/yyyy/, dateValues[0])
+                .replace(/MM/, dateValues[1])
+                .replace(/dd/, dateValues[2])
+                .replace(/HH/, timeValues[0])
+                .replace(/mm/, timeValues[1])
+                .replace(/SS/, timeValues[2]);
+    }
+    
+    function getDateTimeValues(dateTime) {
+        
+        var dateTimeValues = dateTime.split('T');
+        var date = dateTimeValues[0].replace(/-/g, '');
+        var timeValues = dateTimeValues[1].split(':');
+        
+        return {
+            'date': date,
+            'hour': timeValues[0],
+            'minute': timeValues[1]
+        };
+    }
+        
+    function update() {
+        loader.load({
+            href: 'sites/service/status.html',
+            type: 'json',
+            success: function(response) {
+                if (!manualProperties.time) {
+                    var date = response.properties.date;
+                    var time = response.properties.time;
+                    elements.properties.time.field.value = formatDateTime(date, time);
+                }
+                if (!manualProperties.nickname) {
+                    elements.properties.nickname.field.value = response.properties.nickname;
+                }
+            }, 
+            error: function(code) {
+                ui.toast(t.get('properties_error', [code]), 'error');
+            }
+        });
+    }
+    
+    function updateTime() {
+        if (!manualProperties.time) {
+            var dateThing = new Date(elements.properties.time.field.value);
+            var seconds = dateThing.getSeconds();
+
+            if (seconds === 0 || seconds % 10 === 0) {
+                update();
+            } else {
+                dateThing.setSeconds(seconds + 1);
+                elements.properties.time.field.value = dateThing.toISOString().replace(/Z$/, '');
+            }
+        }
+    }
+    
+    function setNickname() {
+        ui.showSpinner(elements.properties.nickname.submit.parentNode, 'property_nickname_loader');
+        
+        var name = elements.properties.nickname.field.value;
+        
+        loader.load({
+            href: '/json.cgi?{%22NICKNAME%22:{%22SET%22:%22' + name + '%22}}',
+            success: function() {
+                manualProperties.nickname = null;
+                update();
+                ui.toast(t.get('set_property_success', [t.get('Datetime')]), 'success');
+            },
+            error: function(code) {
+                ui.toast(t.get('set_property_error', [t.get('Nickname'), code]), 'error');
+            },
+            always: function() {
+                ui.hideSpinner('property_nickname_loader');
+            }
+        });
+    }
+    
+    function setDateTime() {
+        ui.showSpinner(elements.properties.time.submit.parentNode, 'property_time_loader');
+        
+        var values = getDateTimeValues(elements.properties.time.field.value);
+        
+        loader.load({
+            href: '/json.cgi?{%22TIME_SET%22:{%22DATE%22:%22' + values.date + '%22,%22HOUR%22:%22' + values.hour + '%22,%22MINUTE%22:%22' + values.minute + '%22,%22SECOND%22:%2200%22}}',
+            success: function() {
+                manualProperties.time = null;
+                update();
+                ui.toast(t.get('set_property_success', [t.get('Datetime')]), 'success');
+            },
+            error: function(code) {
+                ui.toast(t.get('set_property_error', [t.get('Datetime'), code]), 'error');
+            },
+            always: function() {
+                ui.hideSpinner('property_time_loader');
+            }
+        });
     }
         
     var events = {
@@ -268,15 +378,45 @@ define(function(require) {
                     response: document.querySelector('#software_response'),
                     button: document.querySelector('#software_button')
                 },
-                xmlFiles: document.querySelectorAll('.js_xml_edit')
+                xmlFiles: document.querySelectorAll('.js_xml_edit'),
+                properties: {
+                    time: {
+                        field: document.querySelector('#property_time_field'),
+                        submit: document.querySelector('#property_time_submit')
+                    },
+                    nickname: {
+                        field: document.querySelector('#property_nickname_field'),
+                        submit: document.querySelector('#property_nickname_submit')
+                    }
+                }
             };           
                 
             elements.upload.form.addEventListener('submit', events.upload, true);
             elements.xmlFiles.forEach(function(xmlFile) {
                xmlFile.addEventListener('click', events.xmlEdit, true);
             });
+            
+            elements.properties.time.field.addEventListener('focus', function() {
+                manualProperties.time = elements.properties.time.field.value;
+            }, true);
+            elements.properties.nickname.field.addEventListener('focus', function() {
+                manualProperties.nickname = elements.properties.nickname.field.value;
+            }, true);
+            
+            elements.properties.time.submit.addEventListener('click', function() {
+                setDateTime();
+            });
+            elements.properties.nickname.submit.addEventListener('click', function() {
+                setNickname();
+            });
+            
+            update();
+            
+            updateTimer = window.setInterval(updateTime, 1000);
         },
         dispose: function() {
+            window.clearInterval(updateTimer);
+            
             elements.upload.form.removeEventListener('submit', events.upload, true);
             elements.xmlFiles.forEach(function(xmlFile) {
                 xmlFile.removeEventListener('click', events.xmlEdit, true);

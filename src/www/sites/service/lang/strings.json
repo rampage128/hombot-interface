@@ -28,6 +28,8 @@
         "xml_resetall_confirm": "This will reset all values!\n\nAre you sure?",
         "xml_save_success": "File successfully saved! Please reboot your hombot to apply changes.",
         "xml_save_error": "Error saving file: {0}",
-        "xml_save_unchanged": "No changes in file! Nothing to save."
+        "xml_save_unchanged": "No changes in file! Nothing to save.",
+        "set_property_success": "Property \"{0}\" successfully set!",
+        "set_property_error": "Error setting property \"{0}\": {1}"
     }
 }

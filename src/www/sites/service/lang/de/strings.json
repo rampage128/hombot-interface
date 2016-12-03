@@ -28,6 +28,8 @@
         "xml_resetall_confirm": "Dies setzt alle Werte zurück!\n\nSind sie sicher?",
         "xml_save_success": "Datei erfolgreich gespeichert! Zum anwenden der Änderungen Hombot neu starten.",
         "xml_save_error": "Fehler beim Speichern der datei: {0}",
-        "xml_save_unchanged": "Keine Änderungen gefunden! Nichts gespeichert."
+        "xml_save_unchanged": "Keine Änderungen gefunden! Nichts gespeichert.",
+        "set_property_success": "Eigenschaft \"{0}\" erfolgreich gesetzt!",
+        "set_property_error": "Fehler beim Setzen der Eigenschaft \"{0}\": {1}"
     }
 }
