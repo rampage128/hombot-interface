@@ -61,18 +61,18 @@ Wrapping html file
         </svg>
         
         <div class="layout__wrapper">
-            <header>
+            <header role="banner">
                 <h1><svg viewBox="0 0 100 100" class="main-navigation__toggle">
                         <use xlink:href="#icon-menu"></use>
                     </svg> ${JSON:NICKNAME} interface</h1>
             </header>
-            <nav class="main-navigation">
+            <nav class="main-navigation" role="navigation">
                 <ul>
                     <!-- -->
                 </ul>
             </nav>
             <div class="main-navigation__shadow"></div>
-            <main id="content">
+            <main id="content" aria-live="polite" aria-relevant="additions" role="main">
 
             </main>
         </div>
