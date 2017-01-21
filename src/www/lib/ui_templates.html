@@ -11,12 +11,12 @@
 </template>
 
 <template id="template_toaster">
-    <div id="toaster" class="toast__toaster"></div>
+    <div id="toaster" class="toast__toaster" aria-live="assertive" aria-relevant="additions" role="main"></div>
 </template>
 
 <template id="template_toast">
     <div class="toast__container toast__container--{type}">
-        <div class="toast__message">{message}</div>
+        <div class="toast__message" role="alert">{message}</div>
         <div class="toast__close"></div>
     </div>
 </template>
