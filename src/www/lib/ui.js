@@ -1,6 +1,7 @@
 define('ui', ['module', 'text!ui_templates.html', 'translator'], function (module, masterTemplate, t) {
     var menuElement;
     var toaster;
+    var toasts = [];
     var spinner;
     var activeSite = null;
     var main = document.querySelector('#content');
@@ -72,14 +73,16 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
     }
     
     function createToast(message, type) {
-        if (type === 'error') {
-            console.error(message);
-        }
         var temp = document.createElement('div');
         temp.innerHTML = getTemplate('toast')
             .replace(/{message}/g, message)
             .replace(/{type}/g, type);
-        return temp.children[0];
+        return {
+            'element' : temp.children[0],
+            'timeout' : 0,
+            'message' : message,
+            'type' : type
+        };
     }
         
     function createSpinner() {
@@ -186,18 +189,39 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
             }
         },
         toast: function(message, type) {
+            if (type === 'error') {
+                console.error(message);
+            }
+            
             var toaster = getToaster();
-            var toast = createToast(message, type);
-            if (!!toaster.lastElementChild) {
-                toaster.insertBefore(toast, toaster.lastElementChild);
-            } else {
-                toaster.appendChild(toast);
-            }
-            while (toaster.children.length > 4) {
-                toaster.children[0].remove();
-            }
-            window.setTimeout(function() {
-                toast.remove();
+            var toast = null;
+                       
+            toasts.forEach(function(activeToast) {
+                if (activeToast.message === message && activeToast.type === type) {
+                    toast = activeToast;
+                    if (!!toast.timeout) {
+                        window.clearTimeout(toast.timeout);
+                    }
+                }
+            });
+            if (!toast) {
+                toast = createToast(message, type);
+                toasts.push(toast);
+                if (!!toaster.lastElementChild) {
+                    toaster.insertBefore(toast.element, toaster.lastElementChild);
+                } else {
+                    toaster.appendChild(toast.element);
+                }
+                while (toasts.length > 4) {
+                    toasts.splice(0, 1).element.remove();
+                }
+            }       
+            toast.timeout = window.setTimeout(function() {
+                toast.element.remove();
+                var toastIndex = toasts.indexOf(toast);
+                if (toastIndex > -1) {
+                    toasts.splice(toastIndex, 1);
+                }
             }, 10000);
         },
         showDialog: function(title, content, actions) {
