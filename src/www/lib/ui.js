@@ -15,7 +15,7 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
             tmp.innerHTML = masterTemplate;
             var templateWrapper = tmp.querySelector('#template_' + name);
             if (!!templateWrapper) {
-                templates[name] = templateWrapper.innerHTML;
+                templates[name] = templateWrapper.innerHTML.trim();
             }
         }
         return templates[name];
