@@ -174,7 +174,7 @@ define(function(require) {
             elements.repeat.button.onclick = function() { send('repeat', true, this); };
             elements.controls.startstop.button.onclick = function() { 
                 if (!!currentStatus) {
-                    if (currentStatus.robot.state !== 'WORKING') {
+                    if (currentStatus.robot.state !== 'WORKING' && currentStatus.robot.state !== 'HOMING') {
                         send('{\"COMMAND\":\"CLEAN_START\"}', false, this);
                     } else {
                         send('{\"COMMAND\":\"PAUSE\"}', false, this);
