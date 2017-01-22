@@ -60,8 +60,14 @@ define(function(require) {
                 elements.mode.icon.setAttribute('xlink:href', '#icon-mode_' + status.robot.mode.toLowerCase());
                 setLabel(elements.turbo.label, t.get('turbo_status', [(status.robot.turbo ? t.get('on') : t.get('off'))]));
                 elements.turbo.icon.setAttribute('xlink:href', '#icon-turbo_' + status.robot.turbo);
+
                 elements.battery.progress.style.width = status.robot.battery + '%';
+                elements.battery.label.setAttribute('aria-valuenow', status.robot.battery);
+                elements.battery.label.setAttribute('aria-valuetext', t.get('battery_valuetext', [status.robot.battery]));
                 elements.cpu.progress.style.width = (100 - status.robot.cpu.idle) + '%';
+                elements.cpu.label.setAttribute('aria-valuenow', Math.round(100 - status.robot.cpu.idle));
+                elements.cpu.label.setAttribute('aria-valuetext', t.get('cpu_valuetext', [Math.round(100 - status.robot.cpu.idle)]));
+                
                 elements.controls.startstop.icon.setAttribute('xlink:href', status.robot.state !== 'WORKING' ? '#icon-action_start' : '#icon-state_pause');
                 setLabel(elements.controls.startstop.label, t.get(status.robot.state !== 'WORKING' ? 'Start' : 'Pause'));
                 elements.controls.homeundock.icon.setAttribute('xlink:href', status.robot.state !== 'CHARGING' ? '#icon-state_homing' : '#icon-state_backmoving_init');
