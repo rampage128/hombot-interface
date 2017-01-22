@@ -59,11 +59,11 @@
 </svg>
 
 <section class="status__display">
-    <h2 class="overview__title">{Status}</h2>
-    <ul>
+    <h2 class="overview__title" id="overview_status_title" aria-hidden="true">{Status}</h2>
+    <ul role="region" aria-labelledby="overview_status_title">
         <li>
             <div class="status__wrapper">
-                <figure class="status__icon" id="status_state">
+                <figure class="status__icon" id="status_state" role="status" aria-label="{Status}" aria-live="polite" aria-relevant="text">
                     <svg viewBox="0 0 100 100">
                         <use xlink:href="#icon-state_charging"></use>
                     </svg>
@@ -73,7 +73,7 @@
         </li><!--
         --><li>
             <div class="status__wrapper">
-                <figure class="status__icon status__icon--clickable" id="status_repeat">
+                <figure class="status__icon status__icon--clickable" id="status_repeat" role="button" aria-live="polite" aria-relevant="text">
                     <svg viewBox="0 0 100 100">
                         <use xlink:href="#icon-repeat_on"></use>
                     </svg>
@@ -83,7 +83,7 @@
         </li><!--
         --><li>
             <div class="status__wrapper">
-                <figure class="status__icon status__icon--clickable" id="status_mode">
+                <figure class="status__icon status__icon--clickable" id="status_mode" role="button" aria-live="polite" aria-relevant="text">
                     <svg viewBox="0 0 100 100">
                         <use xlink:href="#icon-mode_zz"></use>
                     </svg>
@@ -93,7 +93,7 @@
         </li><!--
         --><li>
             <div class="status__wrapper">
-                <figure class="status__icon status__icon--clickable" id="status_turbo">
+                <figure class="status__icon status__icon--clickable" id="status_turbo" role="button" aria-live="polite" aria-relevant="text">
                     <svg viewBox="0 0 100 100">
                         <use xlink:href="#icon-turbo_on"></use>
                     </svg>
@@ -118,14 +118,14 @@
             </div>
         </li>
     </ul>
-    <h2 class="overview__title">{Controls}</h2>
-    <ul>
+    <h2 class="overview__title" id="overview_controls_title" aria-hidden="true">{Controls}</h2>
+    <ul role="region" aria-labelledby="overview_controls_title">
         <li class="large">
             <div class="status__wrapper camera__wrapper">
-                <ul class="controls__list">
+                <ul class="controls__list" role="presentation">
                     <li class="controls__item">
-                        <div class="status__wrapper controls__button" id="control_startstop">
-                            <figure class="status__icon" id="status_repeat">
+                        <div class="status__wrapper controls__button" id="control_startstop" role="button">
+                            <figure class="status__icon">
                                 <svg viewBox="0 0 100 100">
                                     <use xlink:href="#icon-action_start"></use>
                                 </svg>
@@ -134,8 +134,8 @@
                         </div>
                     </li><!--
                     --><li class="controls__item">
-                        <div class="status__wrapper controls__button" id="control_homeundock">
-                            <figure class="status__icon" id="status_repeat">
+                        <div class="status__wrapper controls__button" id="control_homeundock" role="button">
+                            <figure class="status__icon">
                                 <svg viewBox="0 0 100 100">
                                     <use xlink:href="#icon-state_undocking"></use>
                                 </svg>
@@ -144,10 +144,10 @@
                         </div>
                     </li>
                 </ul>
-                <canvas id="camera_canvas" width="320" height="240" />
+                <canvas id="camera_canvas" width="320" height="240" aria-hidden="true" />
             </div>
         </li><!--
-        --><li class="large">
+        --><li class="large" aria-hidden="true">
             <div class="status__wrapper">
                 <div class="joystick__wrapper">
                     <div class="joystick__move joystick__move--disabled" id="joystick_container">
