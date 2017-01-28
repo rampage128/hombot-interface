@@ -25,10 +25,10 @@
     <div class="dialog__wrapper" id="dialog">
         <div class="dialog__back js_dialog_back">
         </div>
-        <div class="dialog__window">
-            <h2 class="dialog__title js_dialog_title">{title}</h2>
+        <div class="dialog__window" role="dialog" aria-labelledby="dialog_title">
+            <h2 class="dialog__title js_dialog_title" id="dialog_title">{title}</h2>
             <div class="dialog__content js_dialog_content"></div>
-            <ul class="dialog-action__container js_dialog_action_bar"></ul>
+            <ul class="dialog-action__container js_dialog_action_bar" role="presentation"></ul>
         </div>
     </div>
 </template>
