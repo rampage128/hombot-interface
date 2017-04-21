@@ -319,6 +319,8 @@ define(function(require) {
                             type: 'default'
                         }
                     ]);
+                
+                    xmlForm.querySelector('input').focus();
                 },
                 error: function(code) {
                     ui.toast(t.get('xml_edit_error', [code]), 'error');

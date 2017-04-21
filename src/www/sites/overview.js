@@ -40,26 +40,38 @@ define(function(require) {
         });
     }
         
+    function setLabel(element, content) {
+        if (element.innerHTML !== content) {
+            element.innerHTML = content;
+        }
+    }
+        
     function getStatus(callback) {
         loader.load({
             href: 'sites/overview/status.html',
             type: 'json',
             success: function(status) {
                 currentStatus = status;
-                elements.state.label.innerHTML = t.get(status.robot.state);
+                setLabel(elements.state.label, t.get(status.robot.state));
                 elements.state.icon.setAttribute('xlink:href', '#icon-state_' + status.robot.state.toLowerCase());
                 elements.repeat.icon.setAttribute('xlink:href', '#icon-repeat_' + status.robot.repeat);
-                elements.repeat.label.innerHTML = t.get('repeat_status', [(status.robot.repeat ? t.get('on') : t.get('off'))]);
-                elements.mode.label.innerHTML = t.get(status.robot.mode);
+                setLabel(elements.repeat.label, t.get('repeat_status', [(status.robot.repeat ? t.get('on') : t.get('off'))]));
+                setLabel(elements.mode.label, t.get(status.robot.mode));
                 elements.mode.icon.setAttribute('xlink:href', '#icon-mode_' + status.robot.mode.toLowerCase());
-                elements.turbo.label.innerHTML =  t.get('turbo_status', [(status.robot.turbo ? t.get('on') : t.get('off'))]);
+                setLabel(elements.turbo.label, t.get('turbo_status', [(status.robot.turbo ? t.get('on') : t.get('off'))]));
                 elements.turbo.icon.setAttribute('xlink:href', '#icon-turbo_' + status.robot.turbo);
+
                 elements.battery.progress.style.width = status.robot.battery + '%';
+                elements.battery.label.setAttribute('aria-valuenow', status.robot.battery);
+                elements.battery.label.setAttribute('aria-valuetext', t.get('battery_valuetext', [status.robot.battery]));
                 elements.cpu.progress.style.width = (100 - status.robot.cpu.idle) + '%';
+                elements.cpu.label.setAttribute('aria-valuenow', Math.round(100 - status.robot.cpu.idle));
+                elements.cpu.label.setAttribute('aria-valuetext', t.get('cpu_valuetext', [Math.round(100 - status.robot.cpu.idle)]));
+                
                 elements.controls.startstop.icon.setAttribute('xlink:href', status.robot.state !== 'WORKING' ? '#icon-action_start' : '#icon-state_pause');
-                elements.controls.startstop.label.innerHTML = t.get(status.robot.state !== 'WORKING' ? 'Start' : 'Pause');
+                setLabel(elements.controls.startstop.label, t.get(status.robot.state !== 'WORKING' ? 'Start' : 'Pause'));
                 elements.controls.homeundock.icon.setAttribute('xlink:href', status.robot.state !== 'CHARGING' ? '#icon-state_homing' : '#icon-state_backmoving_init');
-                elements.controls.homeundock.label.innerHTML = t.get(status.robot.state !== 'CHARGING' ? 'Home' : 'Undock');
+                setLabel(elements.controls.homeundock.label, t.get(status.robot.state !== 'CHARGING' ? 'Home' : 'Undock'));
                 
                 if (status.robot.state !== 'STANDBY') {
                     joystick.stopListening();
@@ -73,10 +85,10 @@ define(function(require) {
             },
             error: function(code) {
                 currentStatus = null;
-                elements.state.label.innerHTML = '-';
-                elements.repeat.label.innerHTML = '-';
-                elements.mode.label.innerHTML = '-';
-                elements.turbo.label.innerHTML = '-';
+                setLabel(elements.state.label, '-');
+                setLabel(elements.repeat.label, '-');
+                setLabel(elements.mode.label, '-');
+                setLabel(elements.turbo.label, '-');
                 elements.battery.progress.style.width = '0%';
                 elements.cpu.progress.style.width = '0%';                
                 joystick.stopListening();

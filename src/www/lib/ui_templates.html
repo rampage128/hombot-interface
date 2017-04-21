@@ -1,5 +1,5 @@
 <template id="template_menuitem">
-    <li><a href="#{id}">{name}</a></li>
+    <li role="menuitem"><a href="#{id}" role="presentation">{name}</a></li>
 </template>
 
 <template id="template_spinner">
@@ -11,12 +11,12 @@
 </template>
 
 <template id="template_toaster">
-    <div id="toaster" class="toast__toaster"></div>
+    <div id="toaster" class="toast__toaster" aria-live="assertive" aria-relevant="additions" role="main"></div>
 </template>
 
 <template id="template_toast">
     <div class="toast__container toast__container--{type}">
-        <div class="toast__message">{message}</div>
+        <div class="toast__message" role="alert">{message}</div>
         <div class="toast__close"></div>
     </div>
 </template>
@@ -25,10 +25,10 @@
     <div class="dialog__wrapper" id="dialog">
         <div class="dialog__back js_dialog_back">
         </div>
-        <div class="dialog__window">
-            <h2 class="dialog__title js_dialog_title">{title}</h2>
+        <div class="dialog__window" role="dialog" aria-labelledby="dialog_title">
+            <h2 class="dialog__title js_dialog_title" id="dialog_title">{title}</h2>
             <div class="dialog__content js_dialog_content"></div>
-            <ul class="dialog-action__container js_dialog_action_bar"></ul>
+            <ul class="dialog-action__container js_dialog_action_bar" role="presentation"></ul>
         </div>
     </div>
 </template>

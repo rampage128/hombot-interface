@@ -1,13 +1,13 @@
-<ul class="layout__container">
+<ul class="layout__container" role="presentation">
     <li class="layout__item full">
         <section class="service__wrapper">
-            <h2 class="service__title">{Software_version}</h2>
-            <div class="service__content">
+            <h2 class="service__title" id="service_software_title" aria-hidden="true">{Software_version}</h2>
+            <div class="service__content" role="region" aria-labelledby="service_software_title">
                 <div class="software__version">
                     ${LGSRV:VERSION}
                 </div>
                 <form id="software_form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
-                    <dl class="form__wrapper software__form">
+                    <dl class="form__wrapper software__form" role="presentation">
                         <dt class="form__label"><label for="software_update">{Update}</label></dt>
                         <dd class="form__field direct">
                             <div class="form__input"><input type="file" name="myfile" id="software_field" /><div id="software_response" class="is-hidden"></div></div>
@@ -20,8 +20,8 @@
     </li>
     <li class="layout__item">
         <section class="service__wrapper">
-            <h2 class="service__title">{Configuration}</h2>
-            <div class="service__content">
+            <h2 class="service__title" id="service_configuration_title" aria-hidden="true">{Configuration}</h2>
+            <div class="service__content" role="region" aria-labelledby="service_configuration_title">
                 <ul class="link__list">
                     <li class="link__item"><a class="link__target js_xml_edit" href="/.../usr/rcfg/App.xml">App.xml</a></li>
                     <li class="link__item"><a class="link__target js_xml_edit" href="/.../usr/rcfg/Motion.xml">Motion.xml</a></li>
@@ -33,8 +33,8 @@
     </li><!--
     --><li class="layout__item">
         <section class="service__wrapper">
-            <h2 class="service__title">{Downloads}</h2>
-            <div class="service__content">
+            <h2 class="service__title" id="service_downloads_title" aria-hidden="true">{Downloads}</h2>
+            <div class="service__content" role="region" aria-labelledby="service_downloads_title">
                 <ul class="link__list">
                     <li class="link__item"><a class="link__target" href="/blackbox.tgz" target="_blank">blackbox.tgz</a></li>
                     <li class="link__item"><a class="link__target" href="/status.html" target="_blank">status.html</a></li>
@@ -48,9 +48,9 @@
     </li>
     <li class="layout__item full">
         <section class="service__wrapper">
-            <h2 class="service__title">{Properties}</h2>
-            <div class="service__content">
-                <dl class="form__wrapper properties__form">
+            <h2 class="service__title" id="service_properties_title" aria-hidden="true">{Properties}</h2>
+            <div class="service__content" role="region" aria-labelledby="service_properties_title">
+                <dl class="form__wrapper properties__form" role="presentation">
                     <dt class="form__label"><label for="property_time_field">{Datetime}</label></dt>
                     <dd class="form__field direct">
                         <div class="form__input"><input type="datetime-local" id="property_time_field" /></div>
