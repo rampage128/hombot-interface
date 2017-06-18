@@ -7,14 +7,20 @@ For further information on the WIFI-hack: See http://www.roboter-forum.com/showt
 
 For simple hack-instructions visit: http://www.roboter-forum.com/showthread.php?10009-LG-Hombot-3-0-WLAN-Steuerung-per-Weboberfl%E4che
 
-##External Libraries
+## External Libraries
 
 This project uses the following external libraries:
 
 * [RequireJS](http://requirejs.org/) for asynchronous module definitions
 * [nodejs](https://nodejs.org/), [npm](https://www.npmjs.com/) and [grunt](http://gruntjs.com/) for building the sources
 
-##License
+## Support me
+
+If you like this or other of my projects, please feel free to support me using the Link below.
+
+[![Buy me a beer](https://img.shields.io/badge/buy%20me%20a%20beer-PayPal-green.svg)](https://www.paypal.me/FrederikWolter/1)
+
+## License
 
 hombot-interface | Web interface to control LG-Hombot
 Copyright (C) 2016 Frederik Wolter
