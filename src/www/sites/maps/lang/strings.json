@@ -3,6 +3,16 @@
         "Learned map": "Learned map",
         "maplist_load_error": "Error loading map list (Code: {0})",
         "map_load_error": "Error loading map <a href=\"{0}\">{0}</a> (Code {1})",
-        "maplog_load_error": "Error loading log <a href=\"{0}\">{0}</a> (Code {1})"
+        "maplog_load_error": "Error loading log <a href=\"{0}\">{0}</a> (Code {1})",
+        "fact_surface": "Cleaned area",
+        "fact_surface_global": "Area",
+        "fact_surface_value": "{0}m²",
+        "fact_duration": "Duration",
+        "fact_duration_hours": "{0}h",
+        "fact_duration_minutes": "{0}min",
+        "fact_duration_seconds": "{0}s",
+        "fact_distance": "Distance",
+        "fact_distance_value": "{0}m",
+        "fact_bump": "Collisions"
     }
 }
