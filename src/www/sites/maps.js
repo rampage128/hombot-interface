@@ -9,6 +9,10 @@ define(function(require) {
     var LogReader = require('sites/maps/logreader');
     var mapRenderer;
     
+    var subviews = { 
+        fact: require('text!./maps/fact.html')
+    };
+    
     function createOption(value, title) {
         var option = document.createElement('option');
         option.innerHTML = title;
@@ -63,6 +67,8 @@ define(function(require) {
             //logFile = mapData.blackbox + log;
         }
         
+        var isGlobalMap = mapFile === mapInfo.global_map;
+        
         if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
             ui.toast(t.get('error_fileapi_support'), 'error');
             return;
@@ -83,6 +89,7 @@ define(function(require) {
                             success: function(content) {
                                 var logReader = new LogReader(content);
                                 renderMap(mapReader.getMapData(), logReader.getLogData());
+                                renderFacts(mapReader.getMapData(), logReader.getLogData(), isGlobalMap);
                             },
                             error: function(code) {
                                 ui.toast(t.get('maplog_load_error', [logFile, code]), 'error');
@@ -90,6 +97,7 @@ define(function(require) {
                         });
                     } else {
                         renderMap(mapReader.getMapData(), null);
+                        renderFacts(mapReader.getMapData(), null, isGlobalMap);
                     }
                 });
             },
@@ -106,13 +114,62 @@ define(function(require) {
         ui.hideSpinner('map_load');
     }
     
+    function renderFacts(mapData, logData, isGlobalMap) {       
+        elements.facts.innerHTML = '';
+              
+        var decimalOptions = {minimumFractionDigits: 0, maximumFractionDigits: 2};       
+        
+        var surface = (mapData.stats.floorSurface / 100).toLocaleString(undefined, decimalOptions);
+        renderFact('surface', isGlobalMap ? 'fact_surface_global' : 'fact_surface', t.get('fact_surface_value', [surface]));
+        
+        if (logData !== null) {
+            var distance = logData.header.travelDistance.toLocaleString(undefined, decimalOptions);
+            
+            renderFact('duration', 'fact_duration', formatDuration(logData.header.duration));
+            renderFact('distance', 'fact_distance', t.get('fact_distance_value', [distance]));
+            renderFact('bump', 'fact_bump', logData.header.numBumps);
+        }
+    }
+    
+    function formatDuration(duration) {
+        duration = Math.max(duration, 1);
+        
+        var hours = Math.floor(duration / 60 / 60);
+        var minutes = Math.floor(duration / 60 - hours * 60);
+        var seconds = Math.floor(duration - minutes * 60 - hours * 60 * 60);
+        var result = '';
+        
+        result = appendDurationPart(hours, 'hours', result);
+        result = appendDurationPart(minutes, 'minutes', result);
+        result = appendDurationPart(seconds, 'seconds', result);
+
+        return result;
+    }   
+    
+    function appendDurationPart(value, type, message) {
+        if (value > 0) {
+            return message + (message !== '' ? ' ' : '') + t.get('fact_duration_' + type, [value]);
+        }
+        return message;
+    }
+    
+    function renderFact(icon, name, value) {
+        var fact = subviews.fact
+        .replace(/{icon}/g, icon)
+        .replace(/{name}/g, t.get(name))
+        .replace(/{value}/g, value);
+
+        elements.facts.innerHTML += fact;
+    }
+    
     return {
         template: require('text!./maps/maps.html'),
         styles: require('text!./maps/maps.css'),
         init: function() {
             elements = {
                 select: document.querySelector('#map_select'),
-                canvas: document.querySelector('#map_canvas')
+                canvas: document.querySelector('#map_canvas'),
+                facts : document.querySelector('#fact_list')
             };           
             
             loadMapList();

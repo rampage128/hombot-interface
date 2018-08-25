@@ -59,6 +59,9 @@ define("sites/maps/mapreader", [], function() {
                 floorXMax: MIN_INT,
                 floorYMax: MIN_INT
             };
+            mapdata.stats = {
+              floorSurface: 0
+            };
 
             for (var i = 0; i < mapdata.header.usedBlocks; i++) {
                 var turn = readInt();
@@ -110,11 +113,12 @@ define("sites/maps/mapreader", [], function() {
                     };
                     block.cells.push(cell);
 
-                    if (cell.floor === 'NORMAL') {
+                    if (cell.floor === 'NORMAL' || cell.floor === 'CARPET') {
                         mapdata.offsets.floorXMin = Math.min(mapdata.offsets.floorXMin, block.x + cell.x);
                         mapdata.offsets.floorYMin = Math.min(mapdata.offsets.floorYMin, block.y + cell.y);
                         mapdata.offsets.floorXMax = Math.max(mapdata.offsets.floorXMax, block.x + cell.x);
                         mapdata.offsets.floorYMax = Math.max(mapdata.offsets.floorYMax, block.y + cell.y);
+                        mapdata.stats.floorSurface++;
                     }
                 }
             }

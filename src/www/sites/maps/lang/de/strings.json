@@ -3,6 +3,16 @@
         "Learned map": "Gelernte Karte",
         "maplist_load_error": "Fehler beim Laden der Kartenliste (Code: {0})",
         "map_load_error": "Fehler beim Laden der Karte <a href=\"{0}\">{0}</a> (Code {1})",
-        "maplog_load_error": "Fehler beim Laden des Logs <a href=\"{0}\">{0}</a> (Code {1})"
+        "maplog_load_error": "Fehler beim Laden des Logs <a href=\"{0}\">{0}</a> (Code {1})",
+        "fact_surface": "Gereinigte Fläche",
+        "fact_surface_global": "Gesamtfläche",
+        "fact_surface_value": "{0}m²",
+        "fact_duration": "Dauer",
+        "fact_duration_hours": "{0}h",
+        "fact_duration_minutes": "{0}min",
+        "fact_duration_seconds": "{0}s",
+        "fact_distance": "Distanz",
+        "fact_distance_value": "{0}m",
+        "fact_bump": "Kollisionen"
     }
 }

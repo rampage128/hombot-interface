@@ -42,6 +42,12 @@ define(function(require) {
         return data.value;
     }
         
+    function setLabel(element, content) {
+        if (element.innerHTML !== content) {
+            element.innerHTML = content;
+        }
+    }
+        
     function getStatus(callback) {
         loader.load({
             href: 'sites/statistics/status.html',
@@ -60,11 +66,11 @@ define(function(require) {
                         
                         var keyItem = mainContainer.querySelector('[data-row-key="' + key + '"]');
                         if (!!keyItem) {
-                            keyItem.innerHTML = t.get(key);
+                            setLabel(keyItem, t.get(key));
                         }
                         var valueItem = mainContainer.querySelector('[data-row-value="' + key + '"]');
                         if (!!valueItem) {
-                            valueItem.innerHTML = readValue(value);
+                            setLabel(valueItem, readValue(value));
                         }
                         if (!keyItem && !valueItem) {
                             rowItems += subviews.row

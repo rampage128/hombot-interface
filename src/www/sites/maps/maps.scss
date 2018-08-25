@@ -18,3 +18,61 @@
         }
     }
 }
+
+.fact {
+    &__list {
+        margin: 0;
+        padding: 4px;
+
+        > li {
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+
+            &.large {
+                width: 50%;
+            }
+
+            @media (min-width: 480px) {
+                width: 25%;
+            }
+        }
+    }
+    
+    &__item {
+        background-color: white;
+        border-radius: 2px;
+        margin: 4px;
+        padding: 8px;
+    }
+    
+    &__icon {
+        font-size: 0.75em;
+        margin: 0;
+        position: relative;
+        height: 0;
+        padding-bottom: 20%;
+        
+        &--clickable {
+            cursor: pointer;
+        }
+        
+        > svg {
+            position: absolute;
+            left: 0;
+            width: 20%;
+        }
+        
+        > figcaption {
+            padding-left: 8px;
+            position: absolute;
+            top: 50%;
+            left: 20%;
+            right: 0;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
