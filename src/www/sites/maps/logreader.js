@@ -39,74 +39,76 @@ define("sites/maps/logreader", [], function() {
         function readEvent(line, previousEvents) {
             var values = line.split(",");
 
-            if (values.length > 1) {           
-                var rawTime = values[0];
-                var time =  rawTime.substring(6, 8) + '.' +
-                            rawTime.substring(4, 6) + '.' +
-                            rawTime.substring(0, 4) + ' - ' +
-                            rawTime.substring(08, 10) + ':' +
-                            rawTime.substring(10, 12) + ':' +
-                            rawTime.substring(12, 14);
-                var entryType = values[1];
-                var eventType = values[2];
-                var info = values[3].trim();
+            if (values.length < 2) {
+                return null;
+            }
+             
+            var rawTime = values[0];
+            var time =  rawTime.substring(6, 8) + '.' +
+                        rawTime.substring(4, 6) + '.' +
+                        rawTime.substring(0, 4) + ' - ' +
+                        rawTime.substring(08, 10) + ':' +
+                        rawTime.substring(10, 12) + ':' +
+                        rawTime.substring(12, 14);
+            var entryType = values[1];
+            var eventType = values[2];
+            var info = values[3].trim();
 
-                if (!!previousEvents && previousEvents.length > 0) {
-                    var previousEvent = previousEvents[0];
-                    var slice = 1;
-                    if (previousEvent.entry === 'STRN') {
-                        slice = 0;
-                        previousEvent = null;
-                    }
-                    if (previousEvents.length > slice) {
-                        var pathEvents = previousEvents.slice(slice);
+            if (!!previousEvents && previousEvents.length > 0) {
+                var previousEvent = previousEvents[0];
+                var slice = 1;
+                if (previousEvent.entry === 'STRN') {
+                    slice = 0;
+                    previousEvent = null;
+                }
+                if (previousEvents.length > slice) {
+                    var pathEvents = previousEvents.slice(slice);
+                }
+            }
+
+            if (entryType.indexOf('POS') === 0) {            
+                var position = {
+                    x: values[3].trim(),
+                    y: values[4].trim(),
+                    r: parseInt(values[5].trim() / 100) + 90
+                };
+                info = values[6].trim();
+
+                var state = 'CLEAN';
+                if (eventType === 'EventPose' && info.indexOf('Floor')) {
+                    state = 'FLOOR_CARPET';
+                }
+                if (eventType === 'EventPose' && info.indexOf('Carpet')) {
+                    state = 'FLOOR_HARD';
+                }
+                if (eventType === 'TrapStateStarts') {
+                    state = 'TRAPPED';
+                    if (info === 'Homing' && !checkEventState(previousEvents, 'HOMING')) {
+                        state = 'TRAPPED_END';
                     }
                 }
+                if (checkEventState(previousEvents, 'TRAPPED')) {
+                    state = 'TRAPPED';
+                }
+                if (checkEventState(previousEvents, ['TRAPPED_HOMING', 'TRAPPED_END'])) {
+                    state = 'TRAPPED_HOMING';
+                }
+                if (eventType === 'TrapStateEnds') {
+                    state = 'CLEAN';
+                    if (info === 'Homing') {
+                        state = 'HOMING';
+                    }
+                }
+                if (previousEvents.length === 0) {
+                    state = 'START';
+                }
 
-                if (entryType.indexOf('POS') === 0) {            
-                    var position = {
-                        x: values[3].trim(),
-                        y: values[4].trim(),
-                        r: parseInt(values[5].trim() / 100) + 90
-                    };
-                    info = values[6].trim();
-
-                    var state = 'CLEAN';
-                    if (eventType === 'EventPose' && info.indexOf('Floor')) {
-                        state = 'FLOOR_CARPET';
+                if (state !== 'TRAPPED_END' && state !== 'TRAPPED_HOMING') {
+                    if (checkEventInfo(pathEvents, 'End Cleaning')) {
+                        state = 'END';
                     }
-                    if (eventType === 'EventPose' && info.indexOf('Carpet')) {
-                        state = 'FLOOR_HARD';
-                    }
-                    if (eventType === 'TrapStateStarts') {
-                        state = 'TRAPPED';
-                        if (info === 'Homing' && !checkEventState(previousEvents, 'HOMING')) {
-                            state = 'TRAPPED_END';
-                        }
-                    }
-                    if (checkEventState(previousEvents, 'TRAPPED')) {
-                        state = 'TRAPPED';
-                    }
-                    if (checkEventState(previousEvents, ['TRAPPED_HOMING', 'TRAPPED_END'])) {
-                        state = 'TRAPPED_HOMING';
-                    }
-                    if (eventType === 'TrapStateEnds') {
-                        state = 'CLEAN';
-                        if (info === 'Homing') {
-                            state = 'HOMING';
-                        }
-                    }
-                    if (previousEvents.length === 0) {
-                        state = 'START';
-                    }
-
-                    if (state !== 'TRAPPED_END' && state !== 'TRAPPED_HOMING') {
-                        if (checkEventInfo(pathEvents, 'End Cleaning')) {
-                            state = 'END';
-                        }
-                        if (checkEventState(previousEvents, ['END', 'HOMING'])) {
-                            state = 'HOMING';
-                        }
+                    if (checkEventState(previousEvents, ['END', 'HOMING'])) {
+                        state = 'HOMING';
                     }
                 }
             }
@@ -158,31 +160,33 @@ define("sites/maps/logreader", [], function() {
             for (var i = 1; i < logLines.length; i++) {
                 var line = logLines[i];
                 var event = readEvent(line, previousEvents);
-                if (!!event.entry && event.entry.indexOf('POS') === 0) {
-                    previousEvents = [];
-                    logdata.events.push(event);
-                    logdata.offsets.xMin = Math.min(logdata.offsets.xMin, event.position.x);
-                    logdata.offsets.xMax = Math.max(logdata.offsets.xMax, event.position.x);
-                    logdata.offsets.yMin = Math.min(logdata.offsets.yMin, event.position.y);
-                    logdata.offsets.yMax = Math.max(logdata.offsets.yMax, event.position.y);
+                if (event !== null) {
+                    if (!!event.entry && event.entry.indexOf('POS') === 0) {
+                        previousEvents = [];
+                        logdata.events.push(event);
+                        logdata.offsets.xMin = Math.min(logdata.offsets.xMin, event.position.x);
+                        logdata.offsets.xMax = Math.max(logdata.offsets.xMax, event.position.x);
+                        logdata.offsets.yMin = Math.min(logdata.offsets.yMin, event.position.y);
+                        logdata.offsets.yMax = Math.max(logdata.offsets.yMax, event.position.y);
 
-                    if (!!currentRoute) {
-                        currentRoute.waypoints.push(event.position);
+                        if (!!currentRoute) {
+                            currentRoute.waypoints.push(event.position);
+                        }
+                        if (!currentRoute || currentRoute.waypoints.length === 0 || event.state !== currentRoute.state) {
+                            currentRoute = {
+                                state: getRouteState(event.state),
+                                waypoints: [
+                                    event.position
+                                ]
+                            };
+                            logdata.routes.push(currentRoute);
+                        }
+                        if (event.info === 'Bumping') {
+                            numBumps++;
+                        }
                     }
-                    if (!currentRoute || currentRoute.waypoints.length === 0 || event.state !== currentRoute.state) {
-                        currentRoute = {
-                            state: getRouteState(event.state),
-                            waypoints: [
-                                event.position
-                            ]
-                        };
-                        logdata.routes.push(currentRoute);
-                    }
-                    if (event.info === 'Bumping') {
-                        numBumps++;
-                    }
+                    previousEvents.push(event);
                 }
-                previousEvents.push(event);
             }
 
             logdata.header = {
