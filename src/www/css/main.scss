@@ -434,6 +434,53 @@ main {
     }
 }
 
+.toolbar {
+    background-color: #FFF;
+    
+    &__group {
+        display: inline-block;
+        margin: 0;
+        padding: 8px;
+        list-style: none;
+        
+        > li {
+            display: inline-block;
+        }
+    }
+    
+    &__item {
+        cursor: pointer;
+        margin: 0;
+        
+        > svg {
+            display: inline-block;
+            vertical-align: middle;
+            width: 48px;
+            height: 48px;
+        }
+        
+        &--disabled {
+            opacity: 50%;
+        }
+        
+        &--active {
+            position: relative;
+            
+            &::after {
+                background-color: rgba(40, 200, 40, 0.8);
+                bottom: -8px;
+                content: "";
+                height: 4px;
+                left: 0;               
+                position: absolute;
+                right: 0;
+            }
+        }
+    }
+    
+    
+}
+
 /* OOCSS */
 .is-hidden {
     display: none !important;
