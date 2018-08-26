@@ -5,7 +5,8 @@ define("sites/maps/maprenderer", [], function() {
     var COLOR_CELL_FLOOR = 'rgba(168, 137, 87, 1)';
     var COLOR_CELL_WALL  = 'rgba(95, 95, 95, 1)';
     var COLOR_CELL_CARPET = 'rgba(255, 255, 255, 1)';
-    var COLOR_CELL_SNEAK = 'rgba(190, 155, 98, 0.75)';
+    var COLOR_CELL_SNEAK = 'rgba(190, 155, 98, 0.8)';
+    var COLOR_CELL_SNEAK_WALL = 'rgba(190, 155, 98, 0.2)';
     var COLOR_CELL_SCREW = 'rgba(133, 108, 68, 0.8)';
     var COLOR_CELL_FIGHT = 'rgba(244, 67, 54, 0.8)';
     var COLOR_CELL_BUMP_ABYSS = 'rgba(118, 94, 107, 0.8)';
@@ -51,7 +52,8 @@ define("sites/maps/maprenderer", [], function() {
                 drawCellLayer(cell.floor === 'WALL', pos, finalCellSize, COLOR_CELL_WALL, ctx);
             }
 
-            drawCellLayer(cell.sneaking, pos, finalCellSize, COLOR_CELL_SNEAK, ctx);
+            drawCellLayer(cell.sneaking && cell.floor !== 'WALL', pos, finalCellSize, COLOR_CELL_SNEAK, ctx);
+            drawCellLayer(cell.sneaking && cell.floor === 'WALL', pos, finalCellSize, COLOR_CELL_SNEAK_WALL, ctx);
             drawCellLayer(cell.screwing, pos, finalCellSize, COLOR_CELL_SCREW, ctx);
             var isMoveObject = cell.sneaking && cell.screwing;
             if (cell.abyss && (cell.screwing || isMoveObject)) { // IS FIGHTING
@@ -92,7 +94,7 @@ define("sites/maps/maprenderer", [], function() {
                 img.onload = function() {
                     imageCache[name] = img;
                     ctx.drawImage(img, position.x - ICON_SIZE / 2, position.y - ICON_SIZE / 2, ICON_SIZE, ICON_SIZE);
-                }
+                };
                 img.src = 'data:image/svg+xml;base64,'+window.btoa(data);
             }
             else {
