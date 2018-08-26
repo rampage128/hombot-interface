@@ -9,6 +9,7 @@ define(function(require) {
     var LogReader = require('sites/maps/logreader');
     var mapRenderer;
     var userZoom = 1;
+    var flip = { x: 1, y: -1 };
     var userOffset = { x: 0, y: 0 };
     
     var subviews = { 
@@ -119,7 +120,7 @@ define(function(require) {
     }
     
     function renderMap() {
-        mapRenderer.render(elements.canvas, userZoom, userOffset);
+        mapRenderer.render(elements.canvas, { x: userZoom * flip.x, y: userZoom * flip.y }, userOffset);
     }
     
     function renderFacts(mapData, logData, isGlobalMap) {       
@@ -177,7 +178,9 @@ define(function(require) {
             elements = {
                 select: document.querySelector('#map_select'),
                 canvas: document.querySelector('#map_canvas'),
-                facts : document.querySelector('#fact_list')
+                facts : document.querySelector('#fact_list'),
+                toolFlipH: document.querySelector('#map_control_flip_horizontal'),
+                toolFlipV: document.querySelector('#map_control_flip_vertical')
             };           
             
             loadMapList();
@@ -204,8 +207,8 @@ define(function(require) {
             
             elements.canvas.onmousemove = function(event) {
                 if (dragging) {
-                    userOffset.x = userOffset.x + (event.screenX - dragPos.x) / mapRenderer.getZoom();
-                    userOffset.y = userOffset.y + (event.screenY - dragPos.y) / mapRenderer.getZoom();
+                    userOffset.x = userOffset.x + (event.screenX - dragPos.x) / (mapRenderer.getZoom() * userZoom);
+                    userOffset.y = userOffset.y + (event.screenY - dragPos.y) / (mapRenderer.getZoom() * userZoom);
                     dragPos.x = event.screenX;
                     dragPos.y = event.screenY;
                     renderMap();
@@ -220,6 +223,18 @@ define(function(require) {
             elements.canvas.onmouseout = function(event) {
                 dragging = false;
             };
+            
+            elements.toolFlipH.onclick = function(event) {
+                flip.x *= -1;
+                elements.toolFlipH.classList.toggle('toolbar__item--active', flip.x < 0);
+                renderMap();
+            };
+            
+            elements.toolFlipV.onclick = function(event) {
+                flip.y *= -1;
+                elements.toolFlipV.classList.toggle('toolbar__item--active', flip.y > 0);
+                renderMap();
+            }
             
             var resizeTimer = 0;
             window.onresize = function() {

@@ -32,18 +32,19 @@ define("sites/maps/maprenderer", [], function() {
     
     return function(mapData, logData) {
         var zoom = 1;
+        var scale = { x: 1, y: 1 };
         var offset = { x: 0, y: 0 };
         var imageCache = {};
 
         function drawCellLayer(condition, pos, size, color, ctx) {
             if (condition) {
                 ctx.fillStyle = color;
-                ctx.fillRect(pos.x, pos.y, Math.ceil(size), Math.ceil(size));
+                ctx.fillRect(pos.x, pos.y, Math.round(size * scale.x), Math.round(size * scale.y));
             }
         }
 
         function drawCell(block, cell, ctx) {
-            var finalCellSize = CELL_SIZE * zoom;
+            var finalCellSize = Math.ceil(CELL_SIZE * zoom);
             var pos = worldToView({ x: block.x + cell.x, y: block.y + cell.y });
 
             if (cell.floor !== 'INACCESSIBLE') {
@@ -68,7 +69,7 @@ define("sites/maps/maprenderer", [], function() {
         }
 
         function drawBlock(block, ctx, start) {       
-            var finalBlockSize = BLOCK_SIZE * zoom;
+            var finalBlockSize = Math.ceil(BLOCK_SIZE * zoom);
             var pos = worldToView(block);
 
             ctx.strokeStyle = COLOR_BLOCK_DEFAULT;
@@ -76,7 +77,7 @@ define("sites/maps/maprenderer", [], function() {
                 ctx.strokeStyle = COLOR_BLOCK_HOME;
             }
             
-            ctx.strokeRect(pos.x, pos.y, Math.ceil(finalBlockSize), Math.ceil(finalBlockSize));
+            ctx.strokeRect(pos.x, pos.y, Math.round(finalBlockSize * scale.x), Math.round(finalBlockSize * scale.y));
         }
 
         function drawIcon(name, coordinates, ctx) {
@@ -185,8 +186,8 @@ define("sites/maps/maprenderer", [], function() {
         
         function worldToView(positionable) {
             return {
-                x: Math.round(positionable.x * zoom + offset.x),
-                y: Math.round(positionable.y * zoom + offset.y),
+                x: Math.round(positionable.x * zoom * scale.x + offset.x),
+                y: Math.round(positionable.y * zoom * scale.y + offset.y),
                 r: positionable.r ? positionable.r * Math.PI / 180 : 0
             };
         }
@@ -195,16 +196,17 @@ define("sites/maps/maprenderer", [], function() {
             return zoom;
         };
 
-        this.render = function(canvas, userZoom, userOffset) {
+        this.render = function(canvas, userScale, userOffset) {
             canvas.width = canvas.parentNode.offsetWidth;
             canvas.height = Math.min(canvas.width, document.body.offsetHeight - 200);
 
+            scale = userScale;
             var xFactor = canvas.width / mapData.size.width;
             var yFactor = canvas.height / mapData.size.height;
-            zoom = Math.min(xFactor, yFactor) * userZoom;
+            zoom = Math.min(xFactor, yFactor);
 
-            offset.x = mapData.offsets.xMin * -1 * zoom + ((canvas.width - mapData.size.width * zoom) / 2) + userOffset.x * zoom;
-            offset.y = mapData.offsets.yMin * -1 * zoom + ((canvas.height - mapData.size.height * zoom) / 2) + userOffset.y * zoom;
+            offset.x = -mapData.offsets.xMin * zoom * scale.x + ((canvas.width - mapData.size.width * zoom * scale.x) / 2) + userOffset.x * zoom * Math.abs(scale.x);
+            offset.y = -mapData.offsets.yMin * zoom * scale.y + ((canvas.height - mapData.size.height * zoom * scale.y) / 2) + userOffset.y * zoom * Math.abs(scale.y);
 
             if (canvas.getContext){
                 var ctx = canvas.getContext('2d');

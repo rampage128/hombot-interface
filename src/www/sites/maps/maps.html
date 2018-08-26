@@ -52,6 +52,12 @@
             </clipPath>
             <path clip-path="url(#b)" d="M3 8.41l9 9 7-7V15h2V7h-8v2h4.59L12 14.59 4.41 7 3 8.41z"/>
         </symbol>
+        <symbol id="icon-mirror-horizontal" viewBox="0 0 48 48">
+            <path d="M13.98 22L6 30l7.98 8v-6H28v-4H13.98v-6zM42 18l-7.98-8v6H20v4h14.02v6L42 18z"/>
+        </symbol>
+        <symbol id="icon-mirror-vertical" viewBox="0 0 48 48">
+            <path d="M32 34.02V20h-4v14.02h-6L30 42l8-7.98h-6zM18 6l-8 7.98h6V28h4V13.98h6L18 6z"/>
+        </symbol>
     </defs>
 </svg>
 <div class="map__wrapper">
@@ -59,10 +65,25 @@
         <select id="map_select"></select>
     </section>
     <section class="map__display">
+        <div class="toolbar">
+            <ul class="toolbar__group">
+                <li>
+                    <figure class="toolbar__item" title="{mirror_horizontal}" id="map_control_flip_horizontal">
+                        <svg viewBox="0 0 100 100">
+                            <use xlink:href="#icon-mirror-horizontal" />
+                        </svg>
+                    </figure>
+                </li><!--
+                --><li>
+                    <figure class="toolbar__item" title="{mirror_vertical}" id="map_control_flip_vertical">
+                        <svg viewBox="0 0 100 100">
+                            <use xlink:href="#icon-mirror-vertical" />
+                        </svg>
+                    </figure>
+                </li>
+            </ul>
+        </div>
         <canvas id="map_canvas"></canvas>
-    </section>
-    <section class="map__options">
-
     </section>
 </div>
 <div class="fact__wrapper">
