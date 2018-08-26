@@ -1,0 +1,8 @@
+{
+    "default": {
+        "module.statistics": "Statistics"
+    },
+    "de": {
+        "module.statistics": "Statistik"
+    }
+}

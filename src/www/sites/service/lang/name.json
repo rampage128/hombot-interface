@@ -1,0 +1,8 @@
+{
+    "default": {
+        "module.service": "Service"
+    },
+    "de": {
+        "module.service": "Wartung"
+    }
+}

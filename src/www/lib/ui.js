@@ -8,7 +8,7 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
     var templates = {};
     var masterConfig = (module.config && module.config()) || {};
     
-    t.load('general');  
+    t.load('general', function() { createMenu(); });
     
     function getTemplate(name) {
         if (!templates[name]) {
@@ -106,16 +106,17 @@ define('ui', ['module', 'text!ui_templates.html', 'translator'], function (modul
         }
     }
        
+    function createMenu() {
+        var menuElement = getMenuElement().querySelector('ul');
+        var menuItems = '';
+        masterConfig.modules.forEach(function(module) {
+            var menuItem = getTemplate('menuitem').replace(/{id}/g, module.id).replace(/{name}/g, t.get('module.' + module.id));
+            menuItems += menuItem;
+        });
+        menuElement.innerHTML = menuItems;
+    }
+       
     return {
-        createMenu: function() {
-            var menuElement = getMenuElement().querySelector('ul');
-            var menuItems = '';
-            masterConfig.modules.forEach(function(module) {
-                var menuItem = getTemplate('menuitem').replace(/{id}/g, module.id).replace(/{name}/g, module.name);
-                menuItems += menuItem;
-            });
-            menuElement.innerHTML = menuItems;
-        },
         showMenu: function() {
             var menuElement = getMenuElement();
             if (menuElement.className.indexOf('active') < 0) {

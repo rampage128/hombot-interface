@@ -1,0 +1,8 @@
+{
+    "default": {
+        "module.schedule": "Schedule"
+    },
+    "de": {
+        "module.schedule": "Zeitplan"
+    }
+}

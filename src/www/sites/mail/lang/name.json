@@ -1,0 +1,8 @@
+{
+    "default": {
+        "module.mail": "Mail"
+    },
+    "de": {
+        "module.mail": "E-Mail"
+    }
+}

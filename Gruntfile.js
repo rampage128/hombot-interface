@@ -86,13 +86,13 @@ module.exports = function (grunt) {
         "merge-json": {
             www: {
                 files: {
-                    "dist/www/lang/general.json": [ "src/www/lang/**/*.json" ],
-                    "dist/www/sites/mail/strings.json": [ "src/www/sites/mail/lang/**/*.json" ],
-                    "dist/www/sites/maps/strings.json": [ "src/www/sites/maps/lang/**/*.json" ],
-                    "dist/www/sites/overview/strings.json": [ "src/www/sites/overview/lang/**/*.json" ],
-                    "dist/www/sites/schedule/strings.json": [ "src/www/sites/schedule/lang/**/*.json" ],
-                    "dist/www/sites/service/strings.json": [ "src/www/sites/service/lang/**/*.json" ],
-                    "dist/www/sites/statistics/strings.json": [ "src/www/sites/statistics/lang/**/*.json" ]
+                    "dist/www/lang/general.json": [ "src/www/lang/**/*.json", "src/www/sites/*/lang/name.json" ],
+                    "dist/www/sites/mail/strings.json": [ "src/www/sites/mail/lang/**/strings.json" ],
+                    "dist/www/sites/maps/strings.json": [ "src/www/sites/maps/lang/**/strings.json" ],
+                    "dist/www/sites/overview/strings.json": [ "src/www/sites/overview/lang/**/strings.json" ],
+                    "dist/www/sites/schedule/strings.json": [ "src/www/sites/schedule/lang/**/strings.json" ],
+                    "dist/www/sites/service/strings.json": [ "src/www/sites/service/lang/**/strings.json" ],
+                    "dist/www/sites/statistics/strings.json": [ "src/www/sites/statistics/lang/**/strings.json" ]
                 }
             }
         },
@@ -101,8 +101,8 @@ module.exports = function (grunt) {
                 options: {
                     order: [
                         'overview',
-                        'schedule',
                         'maps',
+                        'schedule',
                         'statistics',
                         'service',
                         'mail'
@@ -144,8 +144,7 @@ module.exports = function (grunt) {
                 var id = fileName.replace(/\.[^\.]*$/, '');
                 return {
                     id: id,
-                    fileName: fileName,
-                    name: id.charAt(0).toUpperCase() + id.slice(1)
+                    fileName: fileName
                 };
             });
             

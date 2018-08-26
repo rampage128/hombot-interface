@@ -20,16 +20,14 @@ requirejs.onError = function (err) {
 };
 
 define(function(require) {
-    var ui = require('ui');   
-              
-    ui.createMenu();
-       
+    var ui = require('ui');
+
     if(!!window.location.hash) {
         ui.navigate();
     } else {
         ui.navigate('overview');
     }
-    
+
     window.onhashchange = function() {
         ui.navigate();
     };
@@ -37,7 +35,7 @@ define(function(require) {
     document.querySelector('.main-navigation__toggle').onclick = function() {
         ui.showMenu();
     };
-    
+
     document.querySelector('.main-navigation__shadow').onclick = function() {
         ui.hideMenu();
     };
