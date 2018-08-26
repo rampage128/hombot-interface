@@ -295,6 +295,7 @@ main {
     }
     
     &__label {
+        clear: left;
         float: left;
         width: 120px;
         line-height: 1.4;
