@@ -198,7 +198,7 @@ define("sites/maps/maprenderer", [], function() {
 
         this.render = function(canvas, userScale, userOffset) {
             canvas.width = canvas.parentNode.offsetWidth;
-            canvas.height = Math.min(canvas.width, document.body.offsetHeight - 200);
+            canvas.height = Math.min(canvas.width, window.innerHeight - canvas.getBoundingClientRect().top - 128);
 
             scale = userScale;
             var xFactor = canvas.width / mapData.size.width;
