@@ -76,6 +76,17 @@ Wrapping html file
                     <path fill="#ffff00" d="M12,2C8.2,2,5,5.2,5,9c0,5.3,7,13,7,13s7-7.7,7-13C19,5.2,15.8,2,12,2z M7.2,7.2l0.8-0.8l4.1,4.1l3-3h-2.5V6.4h4.3v4.3h-1.1
                 V8.2L12,12L7.2,7.2z"/>
                 </symbol>
+                <symbol id="map_home" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                </symbol>
+    
+                <symbol id="icon-mirror-horizontal" viewBox="0 0 48 48">
+                    <path d="M13.98 22L6 30l7.98 8v-6H28v-4H13.98v-6zM42 18l-7.98-8v6H20v4h14.02v6L42 18z"/>
+                </symbol>
+                <symbol id="icon-mirror-vertical" viewBox="0 0 48 48">
+                    <path d="M32 34.02V20h-4v14.02h-6L30 42l8-7.98h-6zM18 6l-8 7.98h6V28h4V13.98h6L18 6z"/>
+                </symbol>
             </defs>
         </svg>
         
@@ -92,14 +103,29 @@ Wrapping html file
                             <dt class="form__label"><label for="mapfile">Log file:</label></dt>
                             <dd class="form__field"><input type="file" id="logfile"></dd>
                             <dt class="form__label"></dt>
-                            <dd class="form__field"><input type="submit" id="refresh" value="Render"></dd>
+                            <dd class="form__field"><input type="submit" id="refresh" value="Load"></dd>
                         </dl>                       
                     </section>
                     <section class="map__display">
+                        <div class="toolbar">
+                            <ul class="toolbar__group">
+                                <li>
+                                    <figure class="toolbar__item" title="{mirror_horizontal}" id="map_control_flip_horizontal">
+                                        <svg viewBox="0 0 100 100">
+                                            <use xlink:href="#icon-mirror-horizontal" />
+                                        </svg>
+                                    </figure>
+                                </li><!--
+                                --><li>
+                                    <figure class="toolbar__item" title="{mirror_vertical}" id="map_control_flip_vertical">
+                                        <svg viewBox="0 0 100 100">
+                                            <use xlink:href="#icon-mirror-vertical" />
+                                        </svg>
+                                    </figure>
+                                </li>
+                            </ul>
+                        </div>
                         <canvas id="map_canvas"></canvas>
-                    </section>
-                    <section class="map__options">
-
                     </section>
                 </div>
             </main>

@@ -27,7 +27,7 @@ module.exports = function (grunt) {
             viewer: {
                 files: [
                     { src: ['src/www/css/main.scss'], dest: 'dist/www/css/main.css' },
-                    { src: ['src/www/css/*.scss', 'src/www/sites/maps/*.scss'], dest: 'dist/mapviewer/styles.css' }
+                    { src: ['src/mapviewer/styles.scss'], dest: 'dist/mapviewer/styles.css' }
                 ]
             }
         },
