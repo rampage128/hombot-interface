@@ -90,7 +90,7 @@ define(function(require) {
                             type: 'plain',
                             success: function(content) {
                                 var logReader = new LogReader(content);
-                                renderMap(mapReader.getMapData(), logReader.getLogData());
+                                updateMap(mapReader.getMapData(), logReader.getLogData());
                                 renderFacts(mapReader.getMapData(), logReader.getLogData(), isGlobalMap);
                             },
                             error: function(code) {
@@ -98,7 +98,7 @@ define(function(require) {
                             }
                         });
                     } else {
-                        renderMap(mapReader.getMapData(), null);
+                        updateMap(mapReader.getMapData(), null);
                         renderFacts(mapReader.getMapData(), null, isGlobalMap);
                     }
                 });
@@ -110,15 +110,15 @@ define(function(require) {
         });
     }
     
-    function renderMap(mapData, logData) {
+    function updateMap(mapData, logData) {
         userZoom = 1;
         userOffset = { x: 0, y: 0 };
         mapRenderer = new MapRenderer(mapData, logData);
-        mapRenderer.render(elements.canvas, userZoom, userOffset);
+        renderMap();
         ui.hideSpinner('map_load');
     }
     
-    function zoomMap() {
+    function renderMap() {
         mapRenderer.render(elements.canvas, userZoom, userOffset);
     }
     
@@ -189,7 +189,7 @@ define(function(require) {
             elements.canvas.onwheel = function(event) {
                 userZoom -= event.deltaY * 0.005;
                 userZoom = Math.min(20, Math.max(userZoom, 1));
-                zoomMap();
+                renderMap();
                 event.preventDefault();
             };
             
@@ -208,7 +208,7 @@ define(function(require) {
                     userOffset.y = userOffset.y + (event.screenY - dragPos.y) / mapRenderer.getZoom();
                     dragPos.x = event.screenX;
                     dragPos.y = event.screenY;
-                    zoomMap();
+                    renderMap();
                     event.preventDefault();
                 }
             };
@@ -228,7 +228,7 @@ define(function(require) {
                 }
                 resizeTimer = window.setTimeout(function() {
                     if (!!mapRenderer) {
-                        mapRenderer.render(elements.canvas, userZoom);
+                        renderMap();
                     }
                 }, 300);
             };
