@@ -16,6 +16,7 @@ module.exports = function (grunt) {
         sass: {
             www: {
                 files: [
+                    { src: ['src/www/css/main.scss'], dest: 'dist/www/css/main.css' },
                     { src: ['src/www/sites/mail/mail.scss'], dest: 'dist/www/sites/mail/mail.css' },
                     { src: ['src/www/sites/maps/maps.scss'], dest: 'dist/www/sites/maps/maps.css' },
                     { src: ['src/www/sites/overview/overview.scss'], dest: 'dist/www/sites/overview/overview.css' },
@@ -26,7 +27,6 @@ module.exports = function (grunt) {
             },
             viewer: {
                 files: [
-                    { src: ['src/www/css/main.scss'], dest: 'dist/www/css/main.css' },
                     { src: ['src/mapviewer/styles.scss'], dest: 'dist/mapviewer/styles.css' }
                 ]
             }
