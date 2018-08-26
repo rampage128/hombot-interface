@@ -99,9 +99,9 @@ define("sites/maps/mapreader", [], function() {
                 var block = mapdata.blocks[i];
 
                 mapdata.offsets.xMin = Math.min(mapdata.offsets.xMin, block.x);
-                mapdata.offsets.xMax = Math.max(mapdata.offsets.xMax, block.x);
+                mapdata.offsets.xMax = Math.max(mapdata.offsets.xMax, block.x + 1000);
                 mapdata.offsets.yMin = Math.min(mapdata.offsets.yMin, block.y);
-                mapdata.offsets.yMax = Math.max(mapdata.offsets.yMax, block.y);
+                mapdata.offsets.yMax = Math.max(mapdata.offsets.yMax, block.y + 1000);
 
                 for (var j = 0; j < BLOCK_CELL_COUNT; j++) {
                     var cellFlags = readByte();
@@ -132,8 +132,8 @@ define("sites/maps/mapreader", [], function() {
                 }
             }
             
-            mapdata.size.width = mapdata.offsets.xMax - mapdata.offsets.xMin + 1000;
-            mapdata.size.height = mapdata.offsets.yMax - mapdata.offsets.yMin + 1000;
+            mapdata.size.width = mapdata.offsets.xMax - mapdata.offsets.xMin;
+            mapdata.size.height = mapdata.offsets.yMax - mapdata.offsets.yMin;
         }
 
         this.getMapData = function() {
