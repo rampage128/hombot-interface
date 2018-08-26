@@ -8,6 +8,8 @@ define(function(require) {
     var MapReader = require('sites/maps/mapreader');
     var LogReader = require('sites/maps/logreader');
     var mapRenderer;
+    var userZoom = 1;
+    var userOffset = { x: 0, y: 0 };
     
     var subviews = { 
         fact: require('text!./maps/fact.html')
@@ -109,9 +111,15 @@ define(function(require) {
     }
     
     function renderMap(mapData, logData) {
+        userZoom = 1;
+        userOffset = { x: 0, y: 0 };
         mapRenderer = new MapRenderer(mapData, logData);
-        mapRenderer.render(elements.canvas);
+        mapRenderer.render(elements.canvas, userZoom, userOffset);
         ui.hideSpinner('map_load');
+    }
+    
+    function zoomMap() {
+        mapRenderer.render(elements.canvas, userZoom, userOffset);
     }
     
     function renderFacts(mapData, logData, isGlobalMap) {       
@@ -178,6 +186,41 @@ define(function(require) {
                 loadMap(this.selectedIndex);
             };
             
+            elements.canvas.onwheel = function(event) {
+                userZoom -= event.deltaY * 0.005;
+                userZoom = Math.min(20, Math.max(userZoom, 1));
+                zoomMap();
+                event.preventDefault();
+            };
+            
+            var dragging = false;
+            var dragPos = { x: 0, y: 0 };
+            elements.canvas.onmousedown = function(event) {
+                dragPos.x = event.screenX;
+                dragPos.y = event.screenY;
+                dragging = true;
+                event.preventDefault();
+            };
+            
+            elements.canvas.onmousemove = function(event) {
+                if (dragging) {
+                    userOffset.x = userOffset.x + (event.screenX - dragPos.x) / mapRenderer.getZoom();
+                    userOffset.y = userOffset.y + (event.screenY - dragPos.y) / mapRenderer.getZoom();
+                    dragPos.x = event.screenX;
+                    dragPos.y = event.screenY;
+                    zoomMap();
+                    event.preventDefault();
+                }
+            };
+            
+            elements.canvas.onmouseup = function(event) {
+                dragging = false;
+            };
+            
+            elements.canvas.onmouseout = function(event) {
+                dragging = false;
+            };
+            
             var resizeTimer = 0;
             window.onresize = function() {
                 if (!!resizeTimer) {
@@ -185,7 +228,7 @@ define(function(require) {
                 }
                 resizeTimer = window.setTimeout(function() {
                     if (!!mapRenderer) {
-                        mapRenderer.render(elements.canvas);
+                        mapRenderer.render(elements.canvas, userZoom);
                     }
                 }, 300);
             };

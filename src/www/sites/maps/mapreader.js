@@ -59,9 +59,15 @@ define("sites/maps/mapreader", [], function() {
                 floorXMax: MIN_INT,
                 floorYMax: MIN_INT
             };
+            mapdata.size = {
+                width: 0,
+                height: 0
+            };
             mapdata.stats = {
               floorSurface: 0
             };
+
+            var center = null;
 
             for (var i = 0; i < mapdata.header.usedBlocks; i++) {
                 var turn = readInt();
@@ -73,12 +79,15 @@ define("sites/maps/mapreader", [], function() {
                     y = Math.floor(y / 100);
                 }
                 var distance = readInt();
+                if (center === null) {
+                    center = { x: x, y: y };
+                }
 
                 mapdata.blocks.push({
                     turn: turn,
                     move: move,
-                    x: x * 100,
-                    y: y * 100,
+                    x: (x - center.x) * 1000,
+                    y: (y - center.y) * 1000,
                     distance: distance,
                     cells: []
                 });
@@ -101,8 +110,8 @@ define("sites/maps/mapreader", [], function() {
                     var x = Math.floor(j - (y * 10));
 
                     var cell = {
-                        x: x * 10,
-                        y: y * 10,
+                        x: x * 100,
+                        y: y * 100,
                         collision: (cellFlags & (1 << 7)) !== 0,
                         infrared: (cellFlags & (1 << 6)) !== 0,
                         abyss: (cellFlags & (1 << 5)) !== 0,
@@ -122,6 +131,9 @@ define("sites/maps/mapreader", [], function() {
                     }
                 }
             }
+            
+            mapdata.size.width = mapdata.offsets.xMax - mapdata.offsets.xMin + 1000;
+            mapdata.size.height = mapdata.offsets.yMax - mapdata.offsets.yMin + 1000;
         }
 
         this.getMapData = function() {

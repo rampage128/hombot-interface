@@ -111,6 +111,10 @@ define("sites/maps/logreader", [], function() {
                         state = 'HOMING';
                     }
                 }
+                
+                if (checkEventInfo(previousEvents, 'Begin (Docked')) {
+                    state = 'START';
+                }
             }
 
             return {
